@@ -85,17 +85,30 @@ if (typeof window !== "undefined") {
   };
 }
 
-function VideoProvider({ children }: { children: React.ReactNode }) {
+type VideoProviderProps = {
+  defaultVolume?: number;
+  defaultMuted?: boolean;
+  defaultLoop?: boolean;
+  defaultRate?: number;
+};
+
+function VideoProvider({
+  defaultVolume = 0.5,
+  defaultMuted = false,
+  defaultLoop = false,
+  defaultRate = 1,
+  children,
+}: VideoProviderProps & { children: React.ReactNode }) {
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
 
   const [paused, setPaused] = React.useState<boolean>(true);
   const [progress, setProgress] = React.useState<number>(0);
-  const [volume, setVolume] = React.useState<number>(1);
-  const [loop, setLoop] = React.useState<boolean>(false);
-  const [muted, setMuted] = React.useState<boolean>(false);
+  const [volume, setVolume] = React.useState<number>(defaultVolume);
+  const [muted, setMuted] = React.useState<boolean>(defaultMuted);
+  const [loop, setLoop] = React.useState<boolean>(defaultLoop);
+  const [playbackRate, setPlaybackRate] = React.useState<number>(defaultRate);
   const [fullscreen, setFullscreen] = React.useState<boolean>(false);
-  const [playbackRate, setPlaybackRate] = React.useState<number>(1);
   const [duration, setDuration] = React.useState<number>(0);
   const [currentTime, setCurrentTime] = React.useState<number>(0);
 
@@ -108,7 +121,7 @@ function VideoProvider({ children }: { children: React.ReactNode }) {
 
     if (currentTime === duration && !loop) setPaused(true);
     setDuration(videoRef.current.duration);
-  });
+  }, [volume, muted, playbackRate, loop, currentTime, duration]);
 
   const values = {
     videoRef,
@@ -241,7 +254,7 @@ function VideoPlayer({
     );
 }
 
-function VideoControlSlide({
+function VideoControlSeek({
   className,
   ...props
 }: SliderPrimitive.SliderRoot.Props) {
@@ -327,10 +340,7 @@ function VideoControlPlay({
   );
 }
 
-function VideoControlTimer({
-  className,
-  ...props
-}: React.ComponentProps<"button">) {
+function VideoControlTimer({ className }: React.ComponentProps<"button">) {
   const { currentTime, duration } = React.useContext(Context);
   const [reverse, setReverse] = React.useState<boolean>(false);
 
@@ -574,7 +584,7 @@ export {
   VideoControlLoop,
   VideoControlPlay,
   VideoControlPlaybackRate,
-  VideoControlSlide,
+  VideoControlSeek,
   VideoControlTimer,
   VideoControlVolume,
   VideoPlayer,

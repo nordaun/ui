@@ -94,7 +94,7 @@ function FileProvider({
     setProgress(0);
 
     try {
-      for (let file of newFiles) {
+      for (const file of newFiles) {
         const result = workflow({ file, maxSize, accept });
         if (!result.success) return setError(result.message);
 

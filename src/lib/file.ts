@@ -64,4 +64,4 @@ function workflow({ file, maxSize, accept }: WorkflowProps): WorkflowResult {
   };
 }
 
-export { messages, workflow, type Mime };
+export { messages, Mimes, workflow, type Mime };

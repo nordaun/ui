@@ -11,7 +11,7 @@ This component enables you to use a simple lightweight video player with control
 ```
 <VideoProvider>
     <VideoPlayer src="https://example.com/sample.mp4">
-        <VideoControlSlide />
+        <VideoControlSeek />
         <VideoControlList>
             <VideoControlGroup>
                 <VideoControlPlay />
