@@ -4,6 +4,21 @@
   "homepage": "https://github.com/vorhdam/registry",
   "items": [
     {
+      "name": "audio",
+      "type": "registry:block",
+      "author": "vorhdam",
+      "title": "Audio",
+      "description": "A simple audio player component with extendable control options.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button", "dropdown-menu", "slider"],
+      "files": [
+        {
+          "path": "src/components/ui/audio.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "file",
       "type": "registry:block",
       "author": "vorhdam",

@@ -10,6 +10,14 @@ This registry is a collection the components I use daily throughout my work. I d
 
 ## Components
 
+### Audio
+
+**A simple audio player component with extendable control options.**
+
+Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/public/docs/audio.md) and the preview (coming soon)
+
+`bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/video.json`
+
 ### File
 
 **A complex file input component with a built-in customizable workflow system.**
