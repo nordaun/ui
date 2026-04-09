@@ -2,6 +2,8 @@
 
 This component enables you to use a simple lightweight password input with the help of shadcn input-group. It has a toggle option that makes the password visible for the user.
 
+[Preview this component](https://vorhdam-registry.vercel.app/components/password)
+
 ### Installation
 
 `bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/password.json`

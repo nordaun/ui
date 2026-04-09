@@ -2,6 +2,8 @@
 
 This component enables you to upload files to the browser and add them to a react context and integrate them in your workflow.
 
+[Preview this component](https://vorhdam-registry.vercel.app/components/file)
+
 ### Installation
 
 `bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/file.json`

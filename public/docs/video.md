@@ -2,6 +2,8 @@
 
 This component enables you to use a simple lightweight video player with control options like play/pause, volume, playback speed etc.
 
+[Preview this component](https://vorhdam-registry.vercel.app/components/video)
+
 ### Installation
 
 `bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/video.json`
@@ -18,6 +20,7 @@ This component enables you to use a simple lightweight video player with control
                 <VideoControlTimer />
             </VideoControlGroup>
             <VideoControlGroup>
+                <VideoControlLoop />
                 <VideoControlPlaybackRate rates={[0.5, 0.75, 1, 1.25, 2]} />
                 <VideoControlVolume />
                 <VideoControlFullscreen />

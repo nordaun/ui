@@ -2,6 +2,8 @@
 
 This component enables you to use fast and maintained flags from a single React component. The flags were adopted from [twemoji](https://github.com/twitter/twemoji) which has been discontinued. I have updated them according to the latest state of the [United Nations Member State List](https://www.un.org/en/about-us/member-states). It has 252 flags in total with the 193+2 recognized UN flags and a few territorial flags.
 
+[Preview this component](https://vorhdam-registry.vercel.app/components/flag)
+
 ### Installation
 
 `bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/flag.json`

@@ -14,15 +14,15 @@ This registry is a collection the components I use daily throughout my work. I d
 
 **A simple audio player component with extendable control options.**
 
-Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/public/docs/audio.md) and the preview (coming soon)
+Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/public/docs/audio.md) and the [preview](https://vorhdam-registry.vercel.app/components/audio)
 
-`bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/video.json`
+`bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/audio.json`
 
 ### File
 
 **A complex file input component with a built-in customizable workflow system.**
 
-Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/public/docs/file.md) and the preview (coming soon)
+Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/public/docs/file.md) and the [preview](https://vorhdam-registry.vercel.app/components/file)
 
 `bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/file.json`
 
@@ -30,7 +30,7 @@ Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/publi
 
 **A simple flag component that displays flags as svgs based on their code.**
 
-Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/public/docs/flag.md) and the preview (coming soon)
+Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/public/docs/flag.md) and the [preview](https://vorhdam-registry.vercel.app/components/flag)
 
 `bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/flag.json`
 
@@ -38,7 +38,7 @@ Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/publi
 
 **A simple password input component with a secret visibility toggle.**
 
-Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/public/docs/password.md) and the preview (coming soon)
+Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/public/docs/password.md) and the [preview](https://vorhdam-registry.vercel.app/components/password)
 
 `bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/password.json`
 
@@ -46,7 +46,7 @@ Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/publi
 
 **A simple phone input component with a country selector and a number input.**
 
-Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/public/docs/phone.md) and the preview (coming soon)
+Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/public/docs/phone.md) and the [preview](https://vorhdam-registry.vercel.app/components/phone)
 
 `bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/phone.json`
 
@@ -54,6 +54,6 @@ Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/publi
 
 **A simple video player component with extendable control options.**
 
-Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/public/docs/video.md) and the preview (coming soon)
+Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/public/docs/video.md) and the [preview](https://vorhdam-registry.vercel.app/components/video)
 
 `bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/video.json`

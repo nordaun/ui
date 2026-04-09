@@ -2,6 +2,8 @@
 
 This component enables you to collect uniform phone number from users with the help of the [libphonenumber-js](https://www.npmjs.com/package/libphonenumber-js) library. It is great for large project which rely on consistent and international phone number formats.
 
+[Preview this component](https://vorhdam-registry.vercel.app/components/phone)
+
 ### Installation
 
 `bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/phone.json`
