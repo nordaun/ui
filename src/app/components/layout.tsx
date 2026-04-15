@@ -5,7 +5,7 @@ export default function ComponentLayout({
 }>) {
   return (
     <div className="flex w-full items-center justify-center p-10">
-      <div className="max-w-xl w-full">{children}</div>
+      <div className="max-w-4xl w-full">{children}</div>
     </div>
   );
 }

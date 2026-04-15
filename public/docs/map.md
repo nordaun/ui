@@ -1,0 +1,45 @@
+# Map
+
+This component enables you to use a vector tile map with the help of [MapLibre](https://maplibre.org/), a GPU-accelerated opensource mapping package for a smooth and responsive experience. The component also has control options like zoom, fullscreen, locate, etc.
+
+[Preview this component](https://vorhdam-registry.vercel.app/components/map)
+
+### Installation
+
+`bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/map.json`
+
+### Usage
+
+```
+<MapProvider
+    defaultCenter={[19.041, 47.497]}
+    defaultZoom={12}
+    defaultProjection="mercator"
+>
+    <Map className="rounded-xl">
+        <MapControls align="bottom-right">
+            <MapControlGroup>
+                <MapControlZoomIn />
+                <MapControlZoomOut />
+            </MapControlGroup>
+            <MapControlGroup>
+                <MapControlLocate />
+                <MapControlFullscreen />
+            </MapControlGroup>
+        </MapControls>
+        <MapCopyright title="vorhdam" />
+    </Map>
+</MapProvider>
+```
+
+## Extendability
+
+You can extend the control options by editing the `@/components/ui/map.tsx` file that shadcn will create.
+
+You can add new map variables as `React states` to the `React context` and access or modify them in subcomponents later. For example if you want to add a shadcn switch in the control bar:
+
+```
+function MapControlSwitch() {
+  return (<Switch />)
+}
+```

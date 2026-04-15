@@ -75,8 +75,6 @@ const DefaultVideoContext: VideoContext = {
   setCurrentTime: () => {},
 };
 
-const Context = React.createContext<VideoContext>(DefaultVideoContext);
-
 if (typeof window !== "undefined") {
   const _error = console.error.bind(console);
   console.error = (...args) => {
@@ -85,11 +83,14 @@ if (typeof window !== "undefined") {
   };
 }
 
+const Context = React.createContext<VideoContext>(DefaultVideoContext);
+
 type VideoProviderProps = {
   defaultVolume?: number;
   defaultMuted?: boolean;
   defaultLoop?: boolean;
   defaultRate?: number;
+  children: React.ReactNode;
 };
 
 function VideoProvider({
@@ -98,7 +99,7 @@ function VideoProvider({
   defaultLoop = false,
   defaultRate = 1,
   children,
-}: VideoProviderProps & { children: React.ReactNode }) {
+}: VideoProviderProps) {
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
 

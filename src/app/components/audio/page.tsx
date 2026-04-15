@@ -12,17 +12,19 @@ import {
 
 export default function AudioPage() {
   return (
-    <AudioProvider defaultVolume={0.25}>
-      <AudioPlayer src="/sample/audio.webm">
-        <AudioControlPlay />
-        <AudioControlSeek />
-        <AudioControlGroup>
-          <AudioControlTimer />
-          <AudioControlPlaybackRate rates={[0.5, 0.75, 1, 1.25, 2]} />
-          <AudioControlVolume />
-          <AudioControlLoop />
-        </AudioControlGroup>
-      </AudioPlayer>
-    </AudioProvider>
+    <div className="w-xl mx-auto">
+      <AudioProvider defaultVolume={0.25}>
+        <AudioPlayer src="/sample/audio.webm">
+          <AudioControlPlay />
+          <AudioControlSeek />
+          <AudioControlGroup>
+            <AudioControlTimer />
+            <AudioControlPlaybackRate rates={[0.5, 0.75, 1, 1.25, 2]} />
+            <AudioControlVolume />
+            <AudioControlLoop />
+          </AudioControlGroup>
+        </AudioPlayer>
+      </AudioProvider>
+    </div>
   );
 }

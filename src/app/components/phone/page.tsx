@@ -2,7 +2,7 @@ import { Phone } from "@/components/ui/phone";
 
 export default function PhonePage() {
   return (
-    <div className="flex mx-auto w-80">
+    <div className="w-80 mx-auto">
       <Phone placeholder="Enter your number here" />
     </div>
   );

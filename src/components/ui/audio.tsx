@@ -78,8 +78,6 @@ const DefaultAudioContext: AudioContext = {
   setCurrentTime: () => {},
 };
 
-const Context = React.createContext<AudioContext>(DefaultAudioContext);
-
 if (typeof window !== "undefined") {
   const _error = console.error.bind(console);
   console.error = (...args) => {
@@ -93,11 +91,14 @@ const WaveformCache = new WeakMap<
   { ctx: globalThis.AudioContext; analyser: AnalyserNode }
 >();
 
+const Context = React.createContext<AudioContext>(DefaultAudioContext);
+
 type AudioProviderProps = {
   defaultVolume?: number;
   defaultMuted?: boolean;
   defaultLoop?: boolean;
   defaultRate?: number;
+  children: React.ReactNode;
 };
 
 function AudioProvider({
@@ -106,7 +107,7 @@ function AudioProvider({
   defaultLoop = false,
   defaultRate = 1,
   children,
-}: AudioProviderProps & { children: React.ReactNode }) {
+}: AudioProviderProps) {
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const analyserRef = React.useRef<AnalyserNode>(null);

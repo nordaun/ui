@@ -2,7 +2,7 @@
 
 This component enables you to use a simple lightweight waveform-theme audio player with control options like play/pause, volume, playback speed etc.
 
-Preview this component
+[Preview this component](https://vorhdam-registry.vercel.app/components/audio)
 
 ### Installation
 
