@@ -59,6 +59,38 @@
       ]
     },
     {
+      "name": "loading",
+      "type": "registry:block",
+      "author": "vorhdam",
+      "title": "Loading",
+      "description": "A very simple loading animation that can be displayed on long loads.",
+      "files": [
+        {
+          "path": "src/components/ui/loading.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "map",
+      "type": "registry:block",
+      "author": "vorhdam",
+      "title": "Map",
+      "description": "A beautiful and complex map component with modular extendable controls.",
+      "dependencies": ["lucide-react", "maplibre-gl"],
+      "registryDependencies": [
+        "button",
+        "button-group",
+        "https://vorhdam-registry.vercel.app/r/loading.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/map.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "password",
       "type": "registry:block",
       "author": "vorhdam",

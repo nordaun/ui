@@ -34,6 +34,14 @@ Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/publi
 
 `bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/flag.json`
 
+### Map
+
+**A beautiful and complex map component with modular extendable controls.**
+
+Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/public/docs/map.md) and the [preview](https://vorhdam-registry.vercel.app/components/map)
+
+`bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/map.json`
+
 ### Password
 
 **A simple password input component with a secret visibility toggle.**
