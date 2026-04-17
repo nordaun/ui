@@ -12,7 +12,7 @@ This component enables you to use a vector tile map with the help of [MapLibre](
 
 ```
 <MapProvider
-    defaultCenter={[47.4979, 19.0404]}
+    defaultCenter={{ latitude: 47.4979, longitude: 19.0404 }}
     defaultZoom={14}
     defaultProjection="mercator"
 >
@@ -31,7 +31,17 @@ This component enables you to use a vector tile map with the help of [MapLibre](
                 <MapControlLocate />
                 <MapControlFullscreen />
             </MapControlGroup>
-          </MapControls>
+        </MapControls>
+        <MapMarkers>
+            <MapMarker coords={{ latitude: 47.507092, longitude: 19.045636 }}>
+                <MapMarkerIcon />
+                <MapMarkerPopup>
+                    <Card>
+                        ...
+                    </Card>
+                </MapMarkerPopup>
+            </MapMarker>
+        </MapMarkers>
         <MapCopyright title="vorhdam" />
     </Map>
 </MapProvider>
