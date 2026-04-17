@@ -5,6 +5,9 @@ import {
   MapControlFullscreen,
   MapControlGroup,
   MapControlLocate,
+  MapControlPitchDown,
+  MapControlPitchUp,
+  MapControlRotate,
   MapControls,
   MapControlZoomIn,
   MapControlZoomOut,
@@ -25,6 +28,11 @@ export default function MapPage() {
             <MapControlGroup>
               <MapControlZoomIn />
               <MapControlZoomOut />
+            </MapControlGroup>
+            <MapControlGroup>
+              <MapControlPitchUp />
+              <MapControlPitchDown />
+              <MapControlRotate />
             </MapControlGroup>
             <MapControlGroup>
               <MapControlLocate />

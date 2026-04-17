@@ -1,13 +1,24 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { Loader2, Locate, Maximize, Minimize, Minus, Plus } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  Loader2,
+  Locate,
+  Maximize,
+  Minimize,
+  Minus,
+  Plus,
+} from "lucide-react";
 import { MapLibreMap, MapOptions, StyleSpecification } from "maplibre-gl";
-import "maplibre-gl/dist/maplibre-gl.css";
 import * as React from "react";
+
 import { Button } from "./button";
 import { ButtonGroup } from "./button-group";
 import { Loading } from "./loading";
+
+import { cn } from "@/lib/utils";
+import "maplibre-gl/dist/maplibre-gl.css";
 
 type Theme = "light" | "dark";
 type MapStyle = string | StyleSpecification;
@@ -44,6 +55,7 @@ function useTheme(defaultTheme?: Theme): Theme {
       const docTheme = getDocumentTheme();
       if (docTheme) setTheme(docTheme);
     });
+
     observer.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ["class"],
@@ -377,7 +389,7 @@ function MapControlZoomIn({ className }: { className?: string }) {
   return (
     <Button
       onClick={handleZoomIn}
-      className={cn("min-h-8 grow", className)}
+      className={cn("min-h-8 grow max-w-9", className)}
       size="sm"
       variant={"outline"}
     >
@@ -398,11 +410,113 @@ function MapControlZoomOut({ className }: { className?: string }) {
   return (
     <Button
       onClick={handleZoomOut}
-      className={cn("min-h-8 grow", className)}
+      className={cn("min-h-8 grow max-w-9", className)}
       size="sm"
       variant={"outline"}
     >
       <Minus />
+    </Button>
+  );
+}
+
+function MapControlPitchUp({ className }: { className?: string }) {
+  const { mapRef, pitch, setPitch } = React.useContext(Context);
+
+  const handlePitchUp = () => {
+    const currentPitch = mapRef.current?.getPitch() ?? pitch ?? 0;
+    const newPitch = Math.min(currentPitch + 15, 85);
+    mapRef.current?.flyTo({
+      pitch: newPitch,
+      duration: 500,
+    });
+    setPitch(newPitch);
+  };
+
+  return (
+    <Button
+      onClick={handlePitchUp}
+      className={cn("min-h-8 grow max-w-9", className)}
+      size="sm"
+      variant={"outline"}
+    >
+      <ChevronUp />
+    </Button>
+  );
+}
+
+function MapControlPitchDown({ className }: { className?: string }) {
+  const { mapRef, pitch, setPitch } = React.useContext(Context);
+
+  const handlePitchDown = () => {
+    const currentPitch = mapRef.current?.getPitch() ?? pitch ?? 0;
+    const newPitch = Math.max(currentPitch - 15, 0);
+    mapRef.current?.flyTo({
+      pitch: newPitch,
+      duration: 500,
+    });
+    setPitch(newPitch);
+  };
+
+  return (
+    <Button
+      onClick={handlePitchDown}
+      className={cn("min-h-8 grow max-w-9", className)}
+      size="sm"
+      variant={"outline"}
+    >
+      <ChevronDown />
+    </Button>
+  );
+}
+
+function MapControlRotate({ className }: { className?: string }) {
+  const { mapRef } = React.useContext(Context);
+  const compassRef = React.useRef<SVGSVGElement>(null);
+
+  React.useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !compassRef.current) return;
+
+    const compass = compassRef.current;
+    const update = () => {
+      const b = map.getBearing();
+      const p = map.getPitch();
+      compass.style.transform = `rotateX(${p}deg) rotateZ(${-b}deg)`;
+    };
+
+    map.on("rotate", update);
+    map.on("pitch", update);
+    update();
+
+    return () => {
+      map.off("rotate", update);
+      map.off("pitch", update);
+    };
+  }, [mapRef]);
+
+  const handleReset = () => {
+    mapRef.current?.resetNorthPitch({ duration: 300 });
+  };
+
+  return (
+    <Button
+      onClick={handleReset}
+      className={cn("min-h-8 grow max-w-9", className)}
+      size="sm"
+      variant={"outline"}
+    >
+      <svg
+        ref={compassRef}
+        viewBox="0 0 24 24"
+        className="size-5 transition-transform duration-500"
+        style={{ transformStyle: "preserve-3d" }}
+        aria-hidden
+      >
+        <path d="M12 2L16 12H12V2Z" className="fill-primary" />
+        <path d="M12 2L8 12H12V2Z" className="fill-primary/60" />
+        <path d="M12 22L16 12H12V22Z" className="fill-muted-foreground/60" />
+        <path d="M12 22L8 12H12V22Z" className="fill-muted-foreground/30" />
+      </svg>
     </Button>
   );
 }
@@ -433,7 +547,7 @@ function MapControlFullscreen({ className }: { className?: string }) {
   return (
     <Button
       onClick={handleFullscreen}
-      className={cn("min-h-8 grow", className)}
+      className={cn("min-h-8 grow max-w-9", className)}
       size="sm"
       variant={"outline"}
     >
@@ -479,7 +593,7 @@ function MapControlLocate({ className, onLocate }: MapControlLocateProps) {
     <Button
       onClick={handleLocate}
       disabled={loading}
-      className={cn("min-h-8 grow", className)}
+      className={cn("min-h-8 grow max-w-9", className)}
       size="sm"
       variant={"outline"}
     >
@@ -493,6 +607,9 @@ export {
   MapControlFullscreen,
   MapControlGroup,
   MapControlLocate,
+  MapControlPitchDown,
+  MapControlPitchUp,
+  MapControlRotate,
   MapControls,
   MapControlZoomIn,
   MapControlZoomOut,

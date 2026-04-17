@@ -12,8 +12,8 @@ This component enables you to use a vector tile map with the help of [MapLibre](
 
 ```
 <MapProvider
-    defaultCenter={[19.041, 47.497]}
-    defaultZoom={12}
+    defaultCenter={[47.4979, 19.0404]}
+    defaultZoom={14}
     defaultProjection="mercator"
 >
     <Map className="rounded-xl">
@@ -23,10 +23,15 @@ This component enables you to use a vector tile map with the help of [MapLibre](
                 <MapControlZoomOut />
             </MapControlGroup>
             <MapControlGroup>
+                <MapControlPitchUp />
+                <MapControlPitchDown />
+                <MapControlRotate />
+            </MapControlGroup>
+            <MapControlGroup>
                 <MapControlLocate />
                 <MapControlFullscreen />
             </MapControlGroup>
-        </MapControls>
+          </MapControls>
         <MapCopyright title="vorhdam" />
     </Map>
 </MapProvider>
