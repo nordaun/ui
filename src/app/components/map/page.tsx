@@ -16,6 +16,7 @@ import {
   MapControlLocate,
   MapControlPitchDown,
   MapControlPitchUp,
+  MapControlProjection,
   MapControlRotate,
   MapControls,
   MapControlZoomIn,
@@ -90,13 +91,14 @@ export default function MapPage() {
               <MapControlRotate />
             </MapControlGroup>
             <MapControlGroup>
+              <MapControlProjection />
               <MapControlLocate />
               <MapControlFullscreen />
             </MapControlGroup>
           </MapControls>
           <MapMarkers>
             {locations.map((l) => (
-              <MapMarker key={l.id} coords={l.coords}>
+              <MapMarker key={l.id} coordinates={l.coords}>
                 <MapMarkerIcon>
                   <div
                     className={cn(
@@ -116,8 +118,8 @@ export default function MapPage() {
                       )}
                     >
                       <Image
-                        width={1920}
-                        height={1080}
+                        width={960}
+                        height={540}
                         src={l.image}
                         alt={l.title}
                         className="relative z-20 object-cover grayscale mix-blend-multiply"

@@ -3,8 +3,10 @@
 import {
   ChevronDown,
   ChevronUp,
+  Globe,
   Loader2,
   Locate,
+  Map as MapIcon,
   MapPin,
   Maximize,
   Minimize,
@@ -22,9 +24,9 @@ import {
 } from "maplibre-gl";
 import * as React from "react";
 
-import { Button } from "./button";
-import { ButtonGroup } from "./button-group";
-import { Loading } from "./loading";
+import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
+import { Loading } from "@/components/ui/loading";
 
 import { cn } from "@/lib/utils";
 import "maplibre-gl/dist/maplibre-gl.css";
@@ -300,6 +302,7 @@ function Map({
       setLoaded(false);
       setIsStyleLoaded(false);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
@@ -577,9 +580,37 @@ function MapControlFullscreen({ className }: { className?: string }) {
   );
 }
 
+function MapControlProjection({ className }: { className?: string }) {
+  const { mapRef, projection, setProjection } = React.useContext(Context);
+
+  const handleProjection = () => {
+    const currentProjection: MapProjection =
+      (mapRef.current?.getProjection().type as MapProjection) ??
+      projection ??
+      "mercator";
+    const newProjection =
+      currentProjection === "mercator" ? "globe" : "mercator";
+    mapRef.current?.setProjection({
+      type: newProjection,
+    });
+    setProjection(newProjection);
+  };
+
+  return (
+    <Button
+      onClick={handleProjection}
+      className={cn("min-h-8 grow max-w-9", className)}
+      size="sm"
+      variant={"outline"}
+    >
+      {projection === "mercator" ? <MapIcon /> : <Globe />}
+    </Button>
+  );
+}
+
 type MapControlLocateProps = {
   className?: string;
-  onLocate?: (coords: Coordinates) => void;
+  onLocate?: (coordinates: Coordinates) => void;
 };
 
 function MapControlLocate({ className, onLocate }: MapControlLocateProps) {
@@ -591,16 +622,16 @@ function MapControlLocate({ className, onLocate }: MapControlLocateProps) {
     setLoading(true);
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        const coords = {
+        const coordinates = {
           longitude: pos.coords.longitude,
           latitude: pos.coords.latitude,
         };
         mapRef.current?.flyTo({
-          center: [coords.longitude, coords.latitude],
+          center: [coordinates.longitude, coordinates.latitude],
           zoom: 14,
           duration: 1500,
         });
-        onLocate?.(coords);
+        onLocate?.(coordinates);
         setLoading(false);
       },
       (err) => {
@@ -645,7 +676,7 @@ function useMarkerContext() {
 }
 
 type MapMarkerProps = {
-  coords: Coordinates;
+  coordinates: Coordinates;
   children: React.ReactNode;
   onClick?: (e: MouseEvent) => void;
   onMouseEnter?: (e: MouseEvent) => void;
@@ -656,7 +687,7 @@ type MapMarkerProps = {
 } & Omit<MarkerOptions, "element">;
 
 function MapMarker({
-  coords,
+  coordinates,
   children,
   onClick,
   onMouseEnter,
@@ -692,7 +723,7 @@ function MapMarker({
       ...markerOptions,
       element: el,
       draggable,
-    }).setLngLat([coords.longitude, coords.latitude]);
+    }).setLngLat([coordinates.longitude, coordinates.latitude]);
 
     el.addEventListener("click", (e) => callbacksRef.current.onClick?.(e));
     el.addEventListener("mouseenter", (e) =>
@@ -719,7 +750,6 @@ function MapMarker({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Add / remove from map
   React.useEffect(() => {
     const map = mapRef.current;
     if (!map || !loaded) return;
@@ -730,10 +760,10 @@ function MapMarker({
   }, [mapRef, loaded, marker]);
 
   if (
-    marker.getLngLat().lng !== coords.longitude ||
-    marker.getLngLat().lat !== coords.latitude
+    marker.getLngLat().lng !== coordinates.longitude ||
+    marker.getLngLat().lat !== coordinates.latitude
   )
-    marker.setLngLat([coords.longitude, coords.latitude]);
+    marker.setLngLat([coordinates.longitude, coordinates.latitude]);
 
   if (marker.isDraggable() !== draggable) marker.setDraggable(draggable);
 
@@ -780,12 +810,7 @@ type MarkerPopupProps = {
   closeButton?: boolean;
 } & Omit<PopupOptions, "className" | "closeButton">;
 
-function MapMarkerPopup({
-  children,
-  className,
-  closeButton = false,
-  ...popupOptions
-}: MarkerPopupProps) {
+function MapMarkerPopup({ children, ...popupOptions }: MarkerPopupProps) {
   const { marker } = useMarkerContext();
   const { mapRef, loaded } = React.useContext(Context);
   const container = React.useMemo(() => document.createElement("div"), []);
@@ -806,8 +831,6 @@ function MapMarkerPopup({
 
   React.useEffect(() => {
     if (!mapRef.current || !loaded) return;
-
-    // Inject style reset directly into the container's parent when added to map
     const content = container.parentElement;
     if (content && content.classList.contains("maplibregl-popup-content")) {
       content.style.background = "transparent";
@@ -826,15 +849,6 @@ function MapMarkerPopup({
     return () => {
       marker.setPopup(null);
     };
-  }, [loaded]);
-
-  React.useEffect(() => {
-    if (!mapRef.current || !loaded) return;
-    popup.setDOMContent(container);
-    marker.setPopup(popup);
-    return () => {
-      marker.setPopup(null);
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded]);
 
@@ -847,8 +861,6 @@ function MapMarkerPopup({
     prevOptions.current = popupOptions;
   }
 
-  const handleClose = () => popup.remove();
-
   return createPortal(children, container);
 }
 
@@ -859,6 +871,7 @@ export {
   MapControlLocate,
   MapControlPitchDown,
   MapControlPitchUp,
+  MapControlProjection,
   MapControlRotate,
   MapControls,
   MapControlZoomIn,
