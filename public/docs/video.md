@@ -30,7 +30,7 @@ This component enables you to use a simple lightweight video player with control
 </VideoProvider>
 ```
 
-## Extendability
+### Extendability
 
 You can extend the control options by editing the `@/components/ui/video.tsx` file that shadcn will create.
 

@@ -25,7 +25,7 @@ This component enables you to use a simple lightweight waveform-theme audio play
 </AudioProvider>
 ```
 
-## Extendability
+### Extendability
 
 You can extend the control options by editing the `@/components/ui/audio.tsx` file that shadcn will create.
 

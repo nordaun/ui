@@ -88,7 +88,18 @@
           "path": "src/components/ui/map.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "css": {
+        ".maplibregl-popup-content": {
+          "background": "none !important",
+          "padding-bottom": "4px !important",
+          "box-shadow": "none !important",
+          "border-radius": "0 !important"
+        },
+        ".maplibregl-popup-tip": {
+          "display": "none !important"
+        }
+      }
     },
     {
       "name": "password",

@@ -23,6 +23,7 @@ import {
   StyleSpecification,
 } from "maplibre-gl";
 import * as React from "react";
+import { createPortal } from "react-dom";
 
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
@@ -30,14 +31,13 @@ import { Loading } from "@/components/ui/loading";
 
 import { cn } from "@/lib/utils";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { createPortal } from "react-dom";
 
 type Theme = "light" | "dark";
-type Coordinates = { latitude: number; longitude: number };
-type MapStyle = string | StyleSpecification;
-type MapProjection = "mercator" | "globe";
+type Coordinate = { latitude: number; longitude: number };
+type Projection = "mercator" | "globe";
+type Style = string | StyleSpecification;
 
-const defaultStyles: Record<Theme, MapStyle> = {
+const defaultStyles: Record<Theme, Style> = {
   light: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
   dark: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
 };
@@ -94,10 +94,10 @@ type MapContext = {
   containerRef: React.RefObject<HTMLDivElement | null>;
   loaded: boolean;
   setLoaded: React.Dispatch<React.SetStateAction<boolean>>;
-  projection: MapProjection;
-  setProjection: React.Dispatch<React.SetStateAction<MapProjection>>;
-  center: Coordinates;
-  setCenter: React.Dispatch<React.SetStateAction<Coordinates>>;
+  projection: Projection;
+  setProjection: React.Dispatch<React.SetStateAction<Projection>>;
+  center: Coordinate;
+  setCenter: React.Dispatch<React.SetStateAction<Coordinate>>;
   zoom: number;
   setZoom: React.Dispatch<React.SetStateAction<number>>;
   bearing: number;
@@ -130,11 +130,11 @@ const DefaultMapContext: MapContext = {
 const Context = React.createContext<MapContext>(DefaultMapContext);
 
 type MapProviderProps = {
-  defaultCenter?: Coordinates;
+  defaultCenter?: Coordinate;
   defaultZoom?: number;
   defaultBearing?: number;
   defaultPitch?: number;
-  defaultProjection?: MapProjection;
+  defaultProjection?: Projection;
   children: React.ReactNode;
 };
 
@@ -154,9 +154,9 @@ function MapProvider({
   const [bearing, setBearing] = React.useState<number>(defaultBearing);
   const [pitch, setPitch] = React.useState<number>(defaultPitch);
   const [fullscreen, setFullscreen] = React.useState<boolean>(false);
-  const [center, setCenter] = React.useState<Coordinates>(defaultCenter);
+  const [center, setCenter] = React.useState<Coordinate>(defaultCenter);
   const [projection, setProjection] =
-    React.useState<MapProjection>(defaultProjection);
+    React.useState<Projection>(defaultProjection);
 
   const values: MapContext = {
     mapRef,
@@ -184,9 +184,9 @@ type MapProps = {
   children?: React.ReactNode;
   className?: string;
   theme?: Theme;
-  styles?: Record<Theme, MapStyle>;
+  styles?: Record<Theme, Style>;
   onViewportChange?: (viewport: {
-    center: Coordinates;
+    center: Coordinate;
     zoom: number;
     bearing: number;
     pitch: number;
@@ -228,12 +228,32 @@ function Map({
     [styles],
   );
 
-  const currentStyleRef = React.useRef<MapStyle | null>(null);
+  const currentStyleRef = React.useRef<Style | null>(null);
   const styleTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(
     null,
   );
   const onViewportChangeRef = React.useRef(onViewportChange);
-  onViewportChangeRef.current = onViewportChange;
+  const [initialMapConfig] = React.useState<{
+    style: Style;
+    center: Coordinate;
+    zoom: number;
+    bearing: number;
+    pitch: number;
+    projection: Projection;
+    options: Omit<MapOptions, "container" | "style">;
+  }>(() => {
+    const initialStyle =
+      resolvedTheme === "dark" ? mapStyles.dark : mapStyles.light;
+    return {
+      style: initialStyle,
+      center: initialCenter,
+      zoom: initialZoom,
+      bearing: initialBearing,
+      pitch: initialPitch,
+      projection,
+      options: props,
+    };
+  });
 
   const clearStyleTimeout = React.useCallback(() => {
     if (styleTimeoutRef.current) {
@@ -243,22 +263,26 @@ function Map({
   }, []);
 
   React.useEffect(() => {
-    if (!containerRef.current) return;
+    onViewportChangeRef.current = onViewportChange;
+  }, [onViewportChange]);
 
-    const initialStyle =
-      resolvedTheme === "dark" ? mapStyles.dark : mapStyles.light;
-    currentStyleRef.current = initialStyle;
+  React.useEffect(() => {
+    if (!containerRef.current) return;
+    currentStyleRef.current = initialMapConfig.style;
 
     const map = new MapLibreMap({
       container: containerRef.current,
-      style: initialStyle,
-      center: [initialCenter.longitude, initialCenter.latitude],
-      zoom: initialZoom,
-      bearing: initialBearing,
-      pitch: initialPitch,
+      style: initialMapConfig.style,
+      center: [
+        initialMapConfig.center.longitude,
+        initialMapConfig.center.latitude,
+      ],
+      zoom: initialMapConfig.zoom,
+      bearing: initialMapConfig.bearing,
+      pitch: initialMapConfig.pitch,
       renderWorldCopies: true,
       attributionControl: false,
-      ...props,
+      ...initialMapConfig.options,
     });
 
     mapRef.current = map;
@@ -267,7 +291,8 @@ function Map({
       clearStyleTimeout();
       styleTimeoutRef.current = setTimeout(() => {
         setIsStyleLoaded(true);
-        if (projection) map.setProjection({ type: projection });
+        if (initialMapConfig.projection)
+          map.setProjection({ type: initialMapConfig.projection });
       }, 100);
     };
 
@@ -276,7 +301,7 @@ function Map({
     const handleMove = () => {
       const c = map.getCenter();
       const viewport = {
-        center: { latitude: c.lat, longitude: c.lng } as Coordinates,
+        center: { latitude: c.lat, longitude: c.lng } as Coordinate,
         zoom: map.getZoom(),
         bearing: map.getBearing(),
         pitch: map.getPitch(),
@@ -302,8 +327,17 @@ function Map({
       setLoaded(false);
       setIsStyleLoaded(false);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [
+    containerRef,
+    mapRef,
+    setBearing,
+    setCenter,
+    setLoaded,
+    setPitch,
+    setZoom,
+    clearStyleTimeout,
+    initialMapConfig,
+  ]);
 
   React.useEffect(() => {
     const map = mapRef.current;
@@ -327,7 +361,7 @@ function Map({
       className={cn("relative h-full w-full overflow-hidden", className)}
     >
       {(!isReady || !loaded) && <Loading />}
-      {mapRef.current && children}
+      {loaded && children}
     </div>
   );
 }
@@ -335,7 +369,7 @@ function Map({
 function MapCopyright({ title }: { title?: string }) {
   return (
     <span className="absolute bottom-1 right-2 z-20 text-card-foreground/75 bg-card/50 rounded-full px-2 border border-border select-none">
-      {title ? `${title} | ` : ""}© CARTO, © OpenStreetMap contributors
+      {title && `${title} | `}© CARTO, © OpenStreetMap contributors
     </span>
   );
 }
@@ -584,8 +618,8 @@ function MapControlProjection({ className }: { className?: string }) {
   const { mapRef, projection, setProjection } = React.useContext(Context);
 
   const handleProjection = () => {
-    const currentProjection: MapProjection =
-      (mapRef.current?.getProjection().type as MapProjection) ??
+    const currentProjection: Projection =
+      (mapRef.current?.getProjection().type as Projection) ??
       projection ??
       "mercator";
     const newProjection =
@@ -610,7 +644,7 @@ function MapControlProjection({ className }: { className?: string }) {
 
 type MapControlLocateProps = {
   className?: string;
-  onLocate?: (coordinates: Coordinates) => void;
+  onLocate?: (coordinates: Coordinate) => void;
 };
 
 function MapControlLocate({ className, onLocate }: MapControlLocateProps) {
@@ -665,18 +699,10 @@ function MapMarkers({
 }
 
 type MarkerContextValue = { marker: Marker };
-
 const MarkerContext = React.createContext<MarkerContextValue | null>(null);
 
-function useMarkerContext() {
-  const ctx = React.useContext(MarkerContext);
-  if (!ctx)
-    throw new Error("Marker subcomponents must be used within MapMarker");
-  return ctx;
-}
-
 type MapMarkerProps = {
-  coordinates: Coordinates;
+  coordinates: Coordinate;
   children: React.ReactNode;
   onClick?: (e: MouseEvent) => void;
   onMouseEnter?: (e: MouseEvent) => void;
@@ -699,6 +725,11 @@ function MapMarker({
   ...markerOptions
 }: MapMarkerProps) {
   const { mapRef, loaded } = React.useContext(Context);
+  const [initialMarkerConfig] = React.useState(() => ({
+    markerOptions,
+    draggable,
+    coordinates,
+  }));
 
   const callbacksRef = React.useRef({
     onClick,
@@ -708,75 +739,111 @@ function MapMarker({
     onDrag,
     onDragEnd,
   });
-  callbacksRef.current = {
-    onClick,
-    onMouseEnter,
-    onMouseLeave,
-    onDragStart,
-    onDrag,
-    onDragEnd,
-  };
+  const [marker, setMarker] = React.useState<Marker | null>(null);
 
-  const marker = React.useMemo(() => {
+  React.useEffect(() => {
+    callbacksRef.current = {
+      onClick,
+      onMouseEnter,
+      onMouseLeave,
+      onDragStart,
+      onDrag,
+      onDragEnd,
+    };
+  }, [onClick, onMouseEnter, onMouseLeave, onDragStart, onDrag, onDragEnd]);
+
+  React.useEffect(() => {
     const el = document.createElement("div");
     const instance = new Marker({
-      ...markerOptions,
+      ...initialMarkerConfig.markerOptions,
       element: el,
-      draggable,
-    }).setLngLat([coordinates.longitude, coordinates.latitude]);
+      draggable: initialMarkerConfig.draggable,
+    }).setLngLat([
+      initialMarkerConfig.coordinates.longitude,
+      initialMarkerConfig.coordinates.latitude,
+    ]);
 
-    el.addEventListener("click", (e) => callbacksRef.current.onClick?.(e));
-    el.addEventListener("mouseenter", (e) =>
-      callbacksRef.current.onMouseEnter?.(e),
-    );
-    el.addEventListener("mouseleave", (e) =>
-      callbacksRef.current.onMouseLeave?.(e),
-    );
-
-    instance.on("dragstart", () => {
+    const handleClick = (e: MouseEvent) => callbacksRef.current.onClick?.(e);
+    const handleMouseEnter = (e: MouseEvent) =>
+      callbacksRef.current.onMouseEnter?.(e);
+    const handleMouseLeave = (e: MouseEvent) =>
+      callbacksRef.current.onMouseLeave?.(e);
+    const handleDragStart = () => {
       const ll = instance.getLngLat();
       callbacksRef.current.onDragStart?.({ lng: ll.lng, lat: ll.lat });
-    });
-    instance.on("drag", () => {
+    };
+    const handleDrag = () => {
       const ll = instance.getLngLat();
       callbacksRef.current.onDrag?.({ lng: ll.lng, lat: ll.lat });
-    });
-    instance.on("dragend", () => {
+    };
+    const handleDragEnd = () => {
       const ll = instance.getLngLat();
       callbacksRef.current.onDragEnd?.({ lng: ll.lng, lat: ll.lat });
-    });
+    };
 
-    return instance;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    el.addEventListener("click", handleClick);
+    el.addEventListener("mouseenter", handleMouseEnter);
+    el.addEventListener("mouseleave", handleMouseLeave);
+    instance.on("dragstart", handleDragStart);
+    instance.on("drag", handleDrag);
+    instance.on("dragend", handleDragEnd);
+
+    setMarker(instance);
+
+    return () => {
+      el.removeEventListener("click", handleClick);
+      el.removeEventListener("mouseenter", handleMouseEnter);
+      el.removeEventListener("mouseleave", handleMouseLeave);
+      instance.off("dragstart", handleDragStart);
+      instance.off("drag", handleDrag);
+      instance.off("dragend", handleDragEnd);
+      instance.remove();
+      setMarker(null);
+    };
+  }, [initialMarkerConfig]);
 
   React.useEffect(() => {
     const map = mapRef.current;
-    if (!map || !loaded) return;
+    if (!map || !loaded || !marker) return;
     marker.addTo(map);
     return () => {
       marker.remove();
     };
   }, [mapRef, loaded, marker]);
 
-  if (
-    marker.getLngLat().lng !== coordinates.longitude ||
-    marker.getLngLat().lat !== coordinates.latitude
-  )
-    marker.setLngLat([coordinates.longitude, coordinates.latitude]);
+  React.useEffect(() => {
+    if (!marker) return;
 
-  if (marker.isDraggable() !== draggable) marker.setDraggable(draggable);
+    const lngLat = marker.getLngLat();
+    if (
+      lngLat.lng !== coordinates.longitude ||
+      lngLat.lat !== coordinates.latitude
+    ) {
+      marker.setLngLat([coordinates.longitude, coordinates.latitude]);
+    }
 
-  const currentOffset = marker.getOffset();
-  const rawOffset = markerOptions.offset ?? [0, 0];
-  const [ox, oy] = Array.isArray(rawOffset)
-    ? rawOffset
-    : [rawOffset.x, rawOffset.y];
-  if (currentOffset.x !== ox || currentOffset.y !== oy)
-    marker.setOffset(rawOffset);
+    if (marker.isDraggable() !== draggable) marker.setDraggable(draggable);
 
-  if (marker.getRotation() !== (markerOptions.rotation ?? 0))
-    marker.setRotation(markerOptions.rotation ?? 0);
+    const currentOffset = marker.getOffset();
+    const rawOffset = markerOptions.offset ?? [0, 0];
+    const [ox, oy] = Array.isArray(rawOffset)
+      ? rawOffset
+      : [rawOffset.x, rawOffset.y];
+    if (currentOffset.x !== ox || currentOffset.y !== oy)
+      marker.setOffset(rawOffset);
+
+    if (marker.getRotation() !== (markerOptions.rotation ?? 0))
+      marker.setRotation(markerOptions.rotation ?? 0);
+  }, [
+    marker,
+    coordinates.longitude,
+    coordinates.latitude,
+    draggable,
+    markerOptions.offset,
+    markerOptions.rotation,
+  ]);
+
+  if (!marker) return null;
 
   return (
     <MarkerContext.Provider value={{ marker }}>
@@ -791,7 +858,9 @@ type MarkerIconProps = {
 };
 
 function MapMarkerIcon({ children, className }: MarkerIconProps) {
-  const { marker } = useMarkerContext();
+  const context = React.useContext(MarkerContext);
+  if (!context?.marker)
+    throw new Error("MapMarkerIcon must be used in a MapMarker Component");
   return createPortal(
     <div className={cn("relative cursor-pointer", className)}>
       {children ?? (
@@ -800,7 +869,7 @@ function MapMarkerIcon({ children, className }: MarkerIconProps) {
         </div>
       )}
     </div>,
-    marker.getElement(),
+    context.marker.getElement(),
   );
 }
 
@@ -811,31 +880,28 @@ type MarkerPopupProps = {
 } & Omit<PopupOptions, "className" | "closeButton">;
 
 function MapMarkerPopup({ children, ...popupOptions }: MarkerPopupProps) {
-  const { marker } = useMarkerContext();
+  const context = React.useContext(MarkerContext);
+  if (!context?.marker)
+    throw new Error("MapMarkerPopup must be used in a MapMarker Component");
   const { mapRef, loaded } = React.useContext(Context);
-  const container = React.useMemo(() => document.createElement("div"), []);
-  const prevOptions = React.useRef(popupOptions);
-
-  const popup = React.useMemo(
-    () =>
-      new Popup({
-        offset: 16,
-        ...popupOptions,
-        closeButton: false,
-      })
-        .setMaxWidth("none")
-        .setDOMContent(container),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+  const [container] = React.useState(() => document.createElement("div"));
+  const [popup] = React.useState(() =>
+    new Popup({
+      offset: 16,
+      ...popupOptions,
+      closeButton: false,
+    })
+      .setMaxWidth("none")
+      .setDOMContent(container),
   );
 
   React.useEffect(() => {
     if (!mapRef.current || !loaded) return;
     const content = container.parentElement;
     if (content && content.classList.contains("maplibregl-popup-content")) {
-      content.style.background = "transparent";
-      content.style.padding = "0";
-      content.style.boxShadow = "none";
+      content.style.setProperty("background", "transparent");
+      content.style.setProperty("padding", "0");
+      content.style.setProperty("box-shadow", "none");
 
       const tip = content.parentElement?.querySelector(
         ".maplibregl-popup-tip",
@@ -844,22 +910,19 @@ function MapMarkerPopup({ children, ...popupOptions }: MarkerPopupProps) {
     }
 
     popup.setDOMContent(container);
-    marker.setPopup(popup);
+    context.marker.setPopup(popup);
 
     return () => {
-      marker.setPopup(null);
+      context.marker.setPopup(null);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loaded]);
+  }, [container, context.marker, loaded, mapRef, popup]);
 
-  if (popup.isOpen()) {
-    const prev = prevOptions.current;
-    if (prev.offset !== popupOptions.offset)
-      popup.setOffset(popupOptions.offset ?? 16);
-    if (prev.maxWidth !== popupOptions.maxWidth && popupOptions.maxWidth)
+  React.useEffect(() => {
+    popup.setOffset(popupOptions.offset ?? 16);
+    if (popupOptions.maxWidth) {
       popup.setMaxWidth(popupOptions.maxWidth);
-    prevOptions.current = popupOptions;
-  }
+    }
+  }, [container, popup, popupOptions.offset, popupOptions.maxWidth]);
 
   return createPortal(children, container);
 }
@@ -882,5 +945,7 @@ export {
   MapMarkerPopup,
   MapMarkers,
   MapProvider,
-  type Coordinates,
+  type Coordinate,
+  type Projection,
+  type Style,
 };

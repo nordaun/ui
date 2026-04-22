@@ -17,7 +17,7 @@ It is super easy to use since it is built around a standard `<input type="tel"/>
 ### Dependencies
 
 It uses good old shadcn components including: `command`, `input-group` and `popover`.
-It also uses the [Flag Component](https://github.com/vorhdam/flags) to improve UX and make countries easier to find. The last dependency is of course the [libphonenumber-js](https://www.npmjs.com/package/libphonenumber-js) NPM package which validates the phone numbers.
+It also uses the [Flag Component](https://github.com/vorhdam/registry/blob/main/public/docs/flag.md) to improve UX and make countries easier to find. The last dependency is of course the [libphonenumber-js](https://www.npmjs.com/package/libphonenumber-js) NPM package which validates the phone numbers.
 
 ### Flexibility and Translation
 

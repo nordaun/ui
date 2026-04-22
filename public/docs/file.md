@@ -8,7 +8,7 @@ This component enables you to upload files to the browser and add them to a reac
 
 `bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/file.json`
 
-## Usage
+### Usage
 
 ```
     <FileProvider
