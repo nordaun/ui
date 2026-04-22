@@ -1,3 +1,6 @@
+import { Footer } from "@/components/blocks/footer";
+import { Header } from "@/components/blocks/header";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -27,7 +30,13 @@ export default function RootLayout({
       <body
         className={`min-h-full flex flex-col ${geistSans.variable} ${geistMono.variable} antialiased dark`}
       >
-        {children}
+        <Header />
+        <TooltipProvider>
+          <main className="flex justify-center items-center min-h-[calc(100vh-7rem)] w-full h-full p-2">
+            {children}
+          </main>
+        </TooltipProvider>
+        <Footer />
       </body>
     </html>
   );
