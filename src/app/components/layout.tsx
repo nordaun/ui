@@ -1,11 +1,22 @@
-export default function ComponentLayout({
+import { AppSidebar } from "@/components/blocks/sidebar/sidebar";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+
+export default function ComponentsLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex w-full items-center justify-center p-10">
-      <div className="max-w-4xl w-full">{children}</div>
-    </div>
+    <SidebarProvider className="w-full min-h-[calc(100dvh-8rem)] items-stretch">
+      <AppSidebar />
+      <SidebarInset className="bg-transparent">
+        <ScrollArea>
+          <div className="flex w-full h-full justify-center items-center py-10 lg:px-[10vw] xl:[20vw] 2xl:px-[25vw]">
+            {children}
+          </div>
+        </ScrollArea>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
