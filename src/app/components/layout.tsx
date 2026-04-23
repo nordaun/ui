@@ -12,7 +12,7 @@ export default function ComponentsLayout({
       <AppSidebar />
       <SidebarInset className="bg-transparent">
         <ScrollArea>
-          <div className="flex w-full h-full justify-center items-center py-10 lg:px-[10vw] xl:[20vw] 2xl:px-[25vw]">
+          <div className="flex w-full h-full justify-center items-center py-10 px-3 lg:px-[10vw] xl:[20vw] 2xl:px-[25vw]">
             {children}
           </div>
         </ScrollArea>

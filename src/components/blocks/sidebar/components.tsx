@@ -1,5 +1,5 @@
 import Link from "next/link";
-import registry from "../../../../registry.json";
+import registry from "registry";
 import {
   SidebarGroup,
   SidebarGroupLabel,

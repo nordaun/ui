@@ -143,6 +143,7 @@ function Phone({ value, onChange, placeholder, ...props }: PhoneProps) {
           type="tel"
           value={number}
           onChange={handleInputChange}
+          placeholder={placeholder}
           {...groupProps}
         />
       </InputGroup>

@@ -1,6 +1,6 @@
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
-import registry from "../../../registry.json";
+import registry from "registry";
 
 export default function ComponentsPage() {
   return (
