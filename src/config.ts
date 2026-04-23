@@ -5,4 +5,5 @@ export const config = {
     nordaun: "https://github.com/nordaun",
     ui: "https://github.com/vorhdam/registry",
   },
+  namespace: "@vorhdam",
 };

@@ -32,7 +32,7 @@ export default function RootLayout({
       >
         <Header />
         <TooltipProvider>
-          <main className="flex justify-center items-center min-h-[calc(100vh-7rem)] w-full h-full p-2">
+          <main className="flex justify-center items-center min-h-[calc(100vh-7rem)] w-full h-full p-2 selection:bg-primary selection:text-primary-foreground">
             {children}
           </main>
         </TooltipProvider>
