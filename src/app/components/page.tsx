@@ -1,6 +1,12 @@
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
+import { Metadata } from "next";
 import Link from "next/link";
 import registry from "registry";
+
+export const metadata: Metadata = {
+  title: "Components",
+  description: "Simple components for your extraordinary creations.",
+};
 
 export default function ComponentsPage() {
   return (

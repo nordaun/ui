@@ -1,6 +1,7 @@
 import { CodeBlock } from "@/components/blocks/code";
 import { Installation } from "@/components/blocks/intallation";
 import { promises as fs } from "fs";
+import { Metadata } from "next";
 import dynamic from "next/dynamic";
 import path from "path";
 import registry from "registry";
@@ -8,6 +9,16 @@ import registry from "registry";
 type PageProps = {
   params: { name: string };
 };
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { name } = await params;
+  const component = registry.items.find((i) => i.name === name);
+  if (!component) return { title: "404" };
+
+  return { title: component.title, description: component.description };
+}
 
 export default async function ComponentPage({ params }: PageProps) {
   const { name } = await params;

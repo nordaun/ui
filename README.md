@@ -1,67 +1,25 @@
-# Vorhdam Shadcn Registry
+# Vorhdam Registry
 
-This registry is a collection the components I use daily throughout my work. I decided to make it public so you can add them to your projects too.
+### Simple components for your extraordinary creations
+
+A collection of beatufully designed components that extend the boundaries of shadcn while staying consistent, modular and of course clean. This registry is a collection the components we use daily throughout our work. We decided to make it public so you can add them to your projects too.
 
 <p align="center">
     <img src="/assets/header.png"/>
 </p>
 
-**This registry only works with BaseUI currently. However I'm planning on making it work with both versions in the near future.**
+**DISCLAMER: This registry only works with BaseUI currently. However we are planning on making it work with Radix UI too in the near future.**
 
-## Components
+### Contributing
 
-### Audio
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-**A simple audio player component with extendable control options.**
+1. Fork the repository
+2. Create your feature branch (git checkout -b feature/amazing-feature)
+3. Commit your changes (git commit -m 'Add some amazing feature')
+4. Push to the branch (git push origin feature/amazing-feature)
+5. Open a Pull Request
 
-Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/public/docs/audio.md) and the [preview](https://vorhdam-registry.vercel.app/components/audio)
+### License
 
-`bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/audio.json`
-
-### File
-
-**A complex file input component with a built-in customizable workflow system.**
-
-Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/public/docs/file.md) and the [preview](https://vorhdam-registry.vercel.app/components/file)
-
-`bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/file.json`
-
-### Flag
-
-**A simple flag component that displays flags as svgs based on their code.**
-
-Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/public/docs/flag.md) and the [preview](https://vorhdam-registry.vercel.app/components/flag)
-
-`bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/flag.json`
-
-### Map
-
-**A beautiful and complex map component with modular extendable controls.**
-
-Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/public/docs/map.md) and the [preview](https://vorhdam-registry.vercel.app/components/map)
-
-`bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/map.json`
-
-### Password
-
-**A simple password input component with a secret visibility toggle.**
-
-Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/public/docs/password.md) and the [preview](https://vorhdam-registry.vercel.app/components/password)
-
-`bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/password.json`
-
-### Phone
-
-**A simple phone input component with a country selector and a number input.**
-
-Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/public/docs/phone.md) and the [preview](https://vorhdam-registry.vercel.app/components/phone)
-
-`bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/phone.json`
-
-### Video
-
-**A simple video player component with extendable control options.**
-
-Checkout the [documentation](https://github.com/vorhdam/registry/blob/main/public/docs/video.md) and the [preview](https://vorhdam-registry.vercel.app/components/video)
-
-`bunx --bun shadcn@latest add https://vorhdam-registry.vercel.app/r/video.json`
+We deeply encourage Open Source, thus this project has an MIT License. You can use, modify, merge, publish, distribute, sublicense, and/or sell any copy of this registry. View the [LICENSE]("https://github.com/vorhdam/registry/blob/main/LICENSE") for more details.

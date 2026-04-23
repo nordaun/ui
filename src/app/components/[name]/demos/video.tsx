@@ -16,7 +16,7 @@ import {
 export default function VideoDemo() {
   return (
     <VideoProvider>
-      <VideoPlayer src="/sample/video.webm">
+      <VideoPlayer src="/assets/video.webm">
         <VideoControlSeek />
         <VideoControlList>
           <VideoControlGroup>

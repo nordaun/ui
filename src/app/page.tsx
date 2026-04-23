@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { config } from "@/config";
 import { cn } from "@/lib/utils";
+import { Metadata } from "next";
 import { Playfair_Display, Satisfy } from "next/font/google";
 import Link from "next/link";
 
@@ -13,6 +14,11 @@ const satisfy = Satisfy({
   variable: "--font-satisfy-sans",
   weight: ["400"],
 });
+
+export const metadata: Metadata = {
+  title: `Home | ${config.name}`,
+  description: "Simple components for your extraordinary creations.",
+};
 
 export default function Page() {
   return (

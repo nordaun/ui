@@ -14,7 +14,7 @@ import {
 export default function AudioDemo() {
   return (
     <AudioProvider>
-      <AudioPlayer src="/sample/audio.webm">
+      <AudioPlayer src="/assets/audio.webm">
         <AudioControlPlay />
         <AudioControlSeek />
         <AudioControlGroup>
