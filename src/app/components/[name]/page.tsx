@@ -3,6 +3,7 @@ import { Installation } from "@/components/blocks/intallation";
 import { promises as fs } from "fs";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
+import { notFound } from "next/navigation";
 import path from "path";
 import registry from "registry";
 
@@ -23,7 +24,7 @@ export async function generateMetadata({
 export default async function ComponentPage({ params }: PageProps) {
   const { name } = await params;
   const component = registry.items.find((i) => i.name === name);
-  if (!component) return <div>Couldn&apos;t find this component</div>;
+  if (!component) return notFound();
 
   const filePath = path.join(
     process.cwd(),

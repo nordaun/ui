@@ -210,7 +210,7 @@ function AudioPlayer({
     <div
       ref={containerRef}
       className={cn(
-        "relative flex items-center gap-3 bg-card rounded-xl px-3 py-2 min-h-14",
+        "relative flex items-center gap-3 bg-accent/60 rounded-xl px-3 py-2 min-h-14 dark:bg-card",
         className,
       )}
     >
@@ -289,7 +289,10 @@ function AudioControlPlay({
       variant="ghost"
       size="icon"
       onClick={handlePlay}
-      className={cn("text-white rounded-full aspect-square h-8", className)}
+      className={cn(
+        "text-card-foreground rounded-full aspect-square h-8",
+        className,
+      )}
       {...props}
     >
       {paused ? (
@@ -323,11 +326,14 @@ function AudioControlTimer({ className }: React.ComponentProps<"button">) {
 
   return (
     <div
-      className={cn("text-white text-sm cursor-pointer mx-1.5", className)}
+      className={cn(
+        "text-card-foreground text-sm cursor-pointer mx-1.5",
+        className,
+      )}
       onClick={handleToggle}
     >
       {displayTime}
-      <span className="text-white/50 mx-1">/</span>
+      <span className="text-card-foreground/50 mx-1">/</span>
       {Math.floor(duration / 60)}:
       {Math.floor(duration % 60)
         .toString()
@@ -351,7 +357,7 @@ function AudioControlPlaybackRate({
     <DropdownMenu>
       <DropdownMenuTrigger
         className={cn(
-          "inline-flex items-center justify-center text-white rounded-full aspect-square h-8 hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 aria-expanded:bg-muted aria-expanded:text-foreground cursor-pointer",
+          "inline-flex items-center justify-center text-card-foreground rounded-full aspect-square h-8 hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 aria-expanded:bg-muted aria-expanded:text-foreground cursor-pointer",
           className,
         )}
         {...props}
@@ -360,13 +366,13 @@ function AudioControlPlaybackRate({
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
-        className="bg-zinc-900 text-white border-zinc-800"
+        className="bg-card text-card-foreground border-border"
       >
         {rates.map((rate) => (
           <DropdownMenuItem
             key={rate}
             onClick={() => handlePlaybackRate(rate)}
-            className="flex items-center justify-between focus:bg-zinc-800 focus:text-white"
+            className="flex items-center justify-between focus:bg-accent focus:text-card-foreground"
           >
             {rate}x{playbackRate === rate && <Check className="size-4 ml-2" />}
           </DropdownMenuItem>
@@ -392,7 +398,10 @@ function AudioControlLoop({
       variant="ghost"
       size="icon"
       onClick={handleLoop}
-      className={cn("text-white rounded-full aspect-square h-8", className)}
+      className={cn(
+        "text-card-foreground rounded-full aspect-square h-8",
+        className,
+      )}
       {...props}
     >
       {loop ? <Repeat1 /> : <Repeat />}
@@ -422,7 +431,7 @@ function AudioControlVolume({ className, ...props }: MenuTrigger.Props) {
     <DropdownMenu>
       <DropdownMenuTrigger
         className={cn(
-          "inline-flex items-center justify-center text-white rounded-full aspect-square h-8 hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 aria-expanded:bg-muted aria-expanded:text-foreground cursor-pointer",
+          "inline-flex items-center justify-center text-card-foreground rounded-full aspect-square h-8 hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 aria-expanded:bg-muted aria-expanded:text-foreground cursor-pointer",
           className,
         )}
         {...props}

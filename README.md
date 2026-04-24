@@ -2,7 +2,7 @@
 
 ### Simple components for your extraordinary creations
 
-A collection of beatufully designed components that extend the boundaries of shadcn while staying consistent, modular and of course clean. This registry is a collection the components we use daily throughout our work. We decided to make it public so you can add them to your projects too.
+A collection of beatifully designed components that extend the boundaries of shadcn while staying consistent, modular and of course clean. This registry is a collection the components we use daily throughout our work. We decided to make it public so you can add them to your projects too.
 
 <p align="center">
     <img src="/assets/header.png"/>

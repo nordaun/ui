@@ -1,5 +1,7 @@
 import { Footer } from "@/components/blocks/footer";
 import { Header } from "@/components/blocks/header";
+import ColorProvider from "@/components/providers/color";
+import ThemeProvider from "@/components/providers/theme";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { config } from "@/config";
 import type { Metadata } from "next";
@@ -30,17 +32,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`min-h-full flex flex-col ${geistSans.variable} ${geistMono.variable} antialiased dark`}
+        className={`flex flex-col ${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
-        <Header />
-        <TooltipProvider>
-          <main className="flex justify-center items-center min-h-[calc(100vh-7rem)] w-full h-full p-2 selection:bg-primary selection:text-primary-foreground">
-            {children}
-          </main>
-        </TooltipProvider>
-        <Footer />
+        <ThemeProvider>
+          <ColorProvider>
+            <TooltipProvider>
+              <Header />
+              <main className="flex justify-center items-center min-h-[calc(100vh-8rem)] h-full w-full selection:bg-primary selection:text-primary-foreground">
+                {children}
+              </main>
+              <Footer />
+            </TooltipProvider>
+          </ColorProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

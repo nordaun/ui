@@ -223,7 +223,7 @@ function VideoPlayer({
       <div
         ref={containerRef}
         className={cn(
-          "relative group overflow-hidden bg-secondary flex items-center justify-center transition-all",
+          "relative group overflow-hidden bg-secondary flex items-center justify-center transition-all dark",
           fullscreen ? "w-screen h-screen" : "rounded-xl aspect-video",
           className,
         )}

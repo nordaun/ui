@@ -58,7 +58,7 @@ export function Installation({ name }: { name: string }) {
         </Button>
       </div>
       <Separator />
-      <div className="flex items-center h-full flex-1 px-4 font-mono text-sm text-primary/80">
+      <div className="flex items-center h-full flex-1 px-4 font-mono text-sm text-foreground/80">
         {command}
       </div>
     </div>

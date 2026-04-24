@@ -37,7 +37,7 @@ export default function Page() {
           playfair.className,
         )}
       >
-        A collection of beatufully designed components that extend the
+        A collection of beatifully designed components that extend the
         boundaries of shadcn while staying consistent, modular and of course
         clean.
       </h2>
@@ -47,7 +47,7 @@ export default function Page() {
             View Components
           </Button>
         </Link>
-        <Link href={config.urls.ui}>
+        <Link href={config.github.project}>
           <Button size={"lg"} variant={"secondary"} className="px-4">
             Github
           </Button>
