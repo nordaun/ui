@@ -35,3 +35,13 @@ export default function VideoDemo() {
   );
 }
 // END
+
+export const keywords = [
+  "shadcn",
+  "base ui",
+  "react",
+  "component",
+  "video",
+  "player",
+  "controls",
+];

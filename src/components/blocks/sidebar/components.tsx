@@ -1,12 +1,13 @@
+import registry from "@/registry";
 import Link from "next/link";
-import registry from "registry";
+
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "../../ui/sidebar";
+} from "@/components/ui/sidebar";
 
 export function SidebarComponents() {
   return (

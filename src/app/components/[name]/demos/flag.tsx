@@ -12,3 +12,13 @@ export default function FlagDemo() {
   );
 }
 // END
+
+export const keywords = [
+  "shadcn",
+  "base ui",
+  "react",
+  "component",
+  "flag",
+  "svg",
+  "icon",
+];

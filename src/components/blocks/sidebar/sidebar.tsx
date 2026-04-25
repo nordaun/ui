@@ -1,5 +1,5 @@
-import { Sidebar, SidebarContent } from "../../ui/sidebar";
-import { SidebarComponents } from "./components";
+import { SidebarComponents } from "@/components/blocks/sidebar/components";
+import { Sidebar, SidebarContent } from "@/components/ui/sidebar";
 
 export function AppSidebar() {
   return (

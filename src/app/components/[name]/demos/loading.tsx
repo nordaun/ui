@@ -9,3 +9,13 @@ export default function LoadingDemo() {
   );
 }
 // END
+
+export const keywords = [
+  "shadcn",
+  "base ui",
+  "react",
+  "component",
+  "loading",
+  "skeleton",
+  "fallback",
+];

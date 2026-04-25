@@ -1,9 +1,9 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { Code, Copy } from "lucide-react";
-import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
 
 type Token = {
   keywords: RegExp;
@@ -208,7 +208,7 @@ export function CodeBlock({
   const lines = code.split("\n");
 
   return (
-    <Card className="overflow-hidden border-border p-4 gap-0">
+    <Card className="overflow-hidden border-border p-4 gap-0 dark:bg-card bg-secondary">
       <CardHeader className="flex flex-row justify-between items-center p-0 m-0">
         <div className="flex flex-row items-center gap-2 text-muted-foreground/70">
           <Code className="size-4" />

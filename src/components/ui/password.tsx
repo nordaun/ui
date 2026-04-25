@@ -1,5 +1,7 @@
 "use client";
 
+import * as React from "react";
+
 import { Button } from "@/components/ui/button";
 import {
   InputGroup,
@@ -7,7 +9,6 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Eye, EyeClosed } from "lucide-react";
-import * as React from "react";
 
 function Password({ className, ...props }: React.ComponentProps<"input">) {
   const [visible, setVisible] = React.useState<boolean>(false);

@@ -1,7 +1,8 @@
 "use client";
 
-import { countryList } from "@/lib/geo";
 import * as React from "react";
+
+import { countryList } from "@/lib/geo";
 
 export type FlagCode = (typeof countryList)[number];
 

@@ -1,6 +1,17 @@
 "use client";
 
 import { MenuTrigger } from "@base-ui/react";
+import * as React from "react";
+
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Slider } from "@/components/ui/slider";
+import { cn } from "@/lib/utils";
 import {
   Check,
   Gauge,
@@ -13,18 +24,6 @@ import {
   Volume2,
   VolumeX,
 } from "lucide-react";
-import * as React from "react";
-
-import { Button } from "./button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./dropdown-menu";
-import { Slider } from "./slider";
-
-import { cn } from "@/lib/utils";
 
 declare global {
   interface Window {
@@ -210,7 +209,7 @@ function AudioPlayer({
     <div
       ref={containerRef}
       className={cn(
-        "relative flex items-center gap-3 bg-accent/60 rounded-xl px-3 py-2 min-h-14 dark:bg-card",
+        "relative flex items-center gap-3 bg-secondary rounded-xl px-3 py-2 min-h-14 dark:bg-secondary/50",
         className,
       )}
     >

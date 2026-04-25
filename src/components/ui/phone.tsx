@@ -1,6 +1,5 @@
 "use client";
 
-import { countryNames } from "@/lib/geo";
 import parsePhoneNumberFromString, {
   CountryCode,
   E164Number,
@@ -29,7 +28,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
+import { countryNames } from "@/lib/geo";
 import { cn } from "@/lib/utils";
 
 const codes: CountryCode[] = getCountries();

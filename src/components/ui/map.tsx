@@ -1,6 +1,23 @@
 "use client";
 
 import {
+  MapLibreMap,
+  MapOptions,
+  Marker,
+  MarkerOptions,
+  Popup,
+  PopupOptions,
+  StyleSpecification,
+} from "maplibre-gl";
+import "maplibre-gl/dist/maplibre-gl.css";
+import * as React from "react";
+import { createPortal } from "react-dom";
+
+import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
+import { Loading } from "@/components/ui/loading";
+import { cn } from "@/lib/utils";
+import {
   ChevronDown,
   ChevronUp,
   Globe,
@@ -13,24 +30,6 @@ import {
   Minus,
   Plus,
 } from "lucide-react";
-import {
-  MapLibreMap,
-  MapOptions,
-  Marker,
-  MarkerOptions,
-  Popup,
-  PopupOptions,
-  StyleSpecification,
-} from "maplibre-gl";
-import * as React from "react";
-import { createPortal } from "react-dom";
-
-import { Button } from "@/components/ui/button";
-import { ButtonGroup } from "@/components/ui/button-group";
-import { Loading } from "@/components/ui/loading";
-
-import { cn } from "@/lib/utils";
-import "maplibre-gl/dist/maplibre-gl.css";
 
 type Theme = "light" | "dark";
 type Coordinate = { latitude: number; longitude: number };

@@ -1,6 +1,21 @@
 {
   "name": "registry",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "A collection of beatifully designed components that extend the boundaries of shadcn while staying consistent, modular and of course clean.",
+  "homepage": "https://vorhdam-registry.vercel.app",
+  "author": "vorhdam <https://github.com/vorhdam>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vorhdam/registry.git"
+  },
+  "keywords": [
+    "shadcn",
+    "registry",
+    "react",
+    "ui",
+    "base"
+  ],
   "private": true,
   "scripts": {
     "dev": "next dev",

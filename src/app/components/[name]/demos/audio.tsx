@@ -28,3 +28,13 @@ export default function AudioDemo() {
   );
 }
 // END
+
+export const keywords = [
+  "shadcn",
+  "base ui",
+  "react",
+  "component",
+  "audio",
+  "player",
+  "waveform",
+];

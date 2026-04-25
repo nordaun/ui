@@ -52,3 +52,13 @@ export default function FileDemo() {
   );
 }
 // END
+
+export const keywords = [
+  "shadcn",
+  "base ui",
+  "react",
+  "component",
+  "file",
+  "upload",
+  "workflow",
+];

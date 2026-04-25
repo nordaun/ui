@@ -9,3 +9,13 @@ export default function PasswordDemo() {
   );
 }
 // END
+
+export const keywords = [
+  "shadcn",
+  "base ui",
+  "react",
+  "component",
+  "password",
+  "input",
+  "toggle",
+];

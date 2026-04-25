@@ -1,20 +1,26 @@
 "use client";
 
-import { config } from "@/config";
-import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useContext } from "react";
-import { ColorContext } from "../providers/color";
-import { Button } from "../ui/button";
+
+import { ColorContext } from "@/components/providers/color";
+import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   navigationMenuTriggerStyle,
-} from "../ui/navigation-menu";
-import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
+} from "@/components/ui/navigation-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@/components/ui/select";
+import { config } from "@/config";
+import { Moon, Sun } from "lucide-react";
 
 export function Header() {
   const { theme, setTheme } = useTheme();

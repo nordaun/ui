@@ -145,3 +145,13 @@ export default function MapDemo() {
   );
 }
 // END
+
+export const keywords = [
+  "shadcn",
+  "base ui",
+  "react",
+  "component",
+  "map",
+  "vector",
+  "controls",
+];

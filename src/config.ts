@@ -15,9 +15,11 @@ export type Color = (typeof colors)[number];
 
 type Config = Readonly<{
   name: string;
+  brand: string;
   colors: readonly Color[];
   defaultColor: Color;
   namespace: string;
+  url: string;
   github: {
     author: string;
     brand: string;
@@ -27,9 +29,11 @@ type Config = Readonly<{
 
 export const config: Config = {
   name: "vorhdamUI",
+  brand: "Nordaun",
   colors,
   defaultColor: "white",
   namespace: "@vorhdam",
+  url: "https://vorhdam-registry.vercel.app",
   github: {
     author: "https://github.com/vorhdam",
     brand: "https://github.com/nordaun",

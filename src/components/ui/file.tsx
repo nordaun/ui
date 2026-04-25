@@ -1,16 +1,14 @@
 "use client";
 
-import { X } from "lucide-react";
 import * as React from "react";
 
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-
 import { useFiles as useFileContext } from "@/hooks/use-file";
 import { messages, Mime, workflow } from "@/lib/file";
-
 import { cn } from "@/lib/utils";
+import { X } from "lucide-react";
 
 const contextMap = new Map<string, React.Context<FileContext>>();
 

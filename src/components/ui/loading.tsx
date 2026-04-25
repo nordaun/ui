@@ -10,9 +10,9 @@ function Loading({ className, ...props }: React.ComponentProps<"div">) {
       {...props}
     >
       <div className="flex gap-1">
-        <span className="size-1.5 animate-pulse rounded-full bg-muted-foreground/60" />
-        <span className="size-1.5 animate-pulse rounded-full bg-muted-foreground/60 [animation-delay:150ms]" />
-        <span className="size-1.5 animate-pulse rounded-full bg-muted-foreground/60 [animation-delay:300ms]" />
+        <span className="size-1.5 animate-pulse rounded-full bg-primary/75" />
+        <span className="size-1.5 animate-pulse rounded-full bg-primary/75 [animation-delay:150ms]" />
+        <span className="size-1.5 animate-pulse rounded-full bg-primary/75 [animation-delay:300ms]" />
       </div>
     </div>
   );

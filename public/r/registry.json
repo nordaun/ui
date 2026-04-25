@@ -1,14 +1,14 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "vorhdam",
-  "homepage": "https://github.com/vorhdam/registry",
+  "homepage": "https://vorhdam-registry.vercel.app",
   "items": [
     {
       "name": "audio",
-      "type": "registry:block",
-      "author": "vorhdam",
       "title": "Audio",
-      "description": "A simple audio player component with extendable control options.",
+      "description": "An audio playback with extendable control modules already included such as volume and speed.",
+      "author": "vorhdam <https://github.com/vorhdam>",
+      "type": "registry:block",
       "dependencies": ["lucide-react"],
       "registryDependencies": ["button", "dropdown-menu", "slider"],
       "files": [
@@ -20,10 +20,10 @@
     },
     {
       "name": "file",
-      "type": "registry:block",
-      "author": "vorhdam",
       "title": "File",
-      "description": "A complex file input component with a built-in customizable workflow system.",
+      "description": "A context-based file uploader with customizable texts and icons and a built-in workflow.",
+      "author": "vorhdam <https://github.com/vorhdam>",
+      "type": "registry:block",
       "dependencies": ["lucide-react"],
       "registryDependencies": ["alert", "button", "progress"],
       "files": [
@@ -39,14 +39,29 @@
           "path": "src/lib/file.ts",
           "type": "registry:lib"
         }
-      ]
+      ],
+      "css": {
+        "::-webkit-scrollbar": {
+          "width": "1.2rem",
+          "min-height": "1.2rem"
+        },
+        "::-webkit-scrollbar-thumb": {
+          "border": "0.4rem solid rgba(0, 0, 0, 0)",
+          "background-clip": "padding-box",
+          "background-color": "var(--border)",
+          "border-radius": "var(--radius)"
+        },
+        "::-webkit-scrollbar-thumb:hover": {
+          "background-color": "var(--ring)"
+        }
+      }
     },
     {
       "name": "flag",
-      "type": "registry:block",
-      "author": "vorhdam",
       "title": "Flag",
-      "description": "A simple flag component that displays flags as svgs based on their code.",
+      "description": "A simple flag displayer which renders a vector image of the selected country's flag.",
+      "author": "vorhdam <https://github.com/vorhdam>",
+      "type": "registry:block",
       "files": [
         {
           "path": "src/components/ui/flag.tsx",
@@ -60,10 +75,10 @@
     },
     {
       "name": "loading",
-      "type": "registry:block",
-      "author": "vorhdam",
       "title": "Loading",
-      "description": "A very simple loading animation that can be displayed on long loads.",
+      "description": "A simple loading component that can be useful when working with long loading components or fallbacks.",
+      "author": "vorhdam <https://github.com/vorhdam>",
+      "type": "registry:block",
       "files": [
         {
           "path": "src/components/ui/loading.tsx",
@@ -73,29 +88,40 @@
     },
     {
       "name": "map",
-      "type": "registry:block",
-      "author": "vorhdam",
       "title": "Map",
-      "description": "A beautiful and complex map component with modular extendable controls.",
+      "description": "A modular context-based map with built in controls such as projection, zoom, rotation and fullscreen.",
+      "author": "vorhdam <https://github.com/vorhdam>",
       "dependencies": ["lucide-react", "maplibre-gl"],
-      "registryDependencies": [
-        "button",
-        "button-group",
-        "https://vorhdam-registry.vercel.app/r/loading.json"
-      ],
+      "registryDependencies": ["button", "button-group"],
+      "type": "registry:block",
       "files": [
+        {
+          "path": "src/components/ui/loading.tsx",
+          "type": "registry:ui"
+        },
         {
           "path": "src/components/ui/map.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "css": {
+        ".maplibregl-popup-content": {
+          "background": "none !important",
+          "padding-bottom": "4px !important",
+          "box-shadow": "none !important",
+          "border-radius": "0 !important"
+        },
+        ".maplibregl-popup-tip": {
+          "display": "none !important"
+        }
+      }
     },
     {
       "name": "password",
-      "type": "registry:block",
-      "author": "vorhdam",
       "title": "Password",
-      "description": "A simple password input component with a secret visibility toggle.",
+      "description": "A super simple password input with a toggleable view button that hides or reveals your password.",
+      "author": "vorhdam <https://github.com/vorhdam>",
+      "type": "registry:block",
       "dependencies": ["lucide-react"],
       "registryDependencies": ["button", "input-group"],
       "files": [
@@ -107,11 +133,11 @@
     },
     {
       "name": "phone",
-      "type": "registry:block",
-      "author": "vorhdam",
       "title": "Phone",
-      "description": "A simple phone input component with a country selector and a number input.",
-      "dependencies": ["libphonenumber-js"],
+      "description": "A simple but clean phone input with a region selection so you dont have to worry about messing up.",
+      "author": "vorhdam <https://github.com/vorhdam>",
+      "type": "registry:block",
+      "dependencies": ["lucide-react", "libphonenumber-js"],
       "registryDependencies": ["command", "input-group", "popover"],
       "files": [
         {
@@ -129,35 +155,32 @@
       ],
       "css": {
         "::-webkit-scrollbar": {
-          "width": "1.2rem"
+          "width": "1.2rem",
+          "min-height": "1.2rem"
         },
         "::-webkit-scrollbar-thumb": {
           "border": "0.4rem solid rgba(0, 0, 0, 0)",
           "background-clip": "padding-box",
-          "background-color": "hsl(var(--border))",
+          "background-color": "var(--border)",
           "border-radius": "var(--radius)"
         },
         "::-webkit-scrollbar-thumb:hover": {
-          "background-color": "hsl(var(--accent))"
+          "background-color": "var(--ring)"
         }
       }
     },
     {
       "name": "video",
-      "type": "registry:block",
-      "author": "vorhdam",
       "title": "Video",
-      "description": "A simple video player component with extendable control options.",
+      "description": "A video playback with extendable control modules already included such as volume, speed and fullscreen.",
+      "author": "vorhdam <https://github.com/vorhdam>",
+      "type": "registry:block",
       "dependencies": ["lucide-react"],
       "registryDependencies": ["button", "dropdown-menu", "slider"],
       "files": [
         {
           "path": "src/components/ui/video.tsx",
           "type": "registry:ui"
-        },
-        {
-          "path": "src/hooks/use-mobile.ts",
-          "type": "registry:hook"
         }
       ]
     }

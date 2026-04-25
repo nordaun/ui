@@ -1,19 +1,28 @@
 "use client";
 
+import { useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { config } from "@/config";
 import { Copy, Terminal } from "lucide-react";
-import { useEffect, useState } from "react";
-import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
 
 export function Installation({ name }: { name: string }) {
   const installers = ["npm", "yarn", "pnpm", "bun"] as const;
   type Installer = (typeof installers)[number];
 
   const [selected, setSelected] = useState<Installer>("bun");
+  const [command, setCommand] = useState<string>(
+    `bunx --bun shadcn@latest add ${config.namespace}/${name}`,
+  );
 
-  const createCommand = (): string => {
-    switch (selected) {
+  const handleClick = (installer: Installer) => {
+    setSelected(installer);
+    setCommand(createCommand(installer));
+  };
+
+  const createCommand = (installer: Installer): string => {
+    switch (installer) {
       case "npm":
         return `npx shadcn@latest add ${config.namespace}/${name}`;
       case "yarn":
@@ -24,12 +33,6 @@ export function Installation({ name }: { name: string }) {
         return `bunx --bun shadcn@latest add ${config.namespace}/${name}`;
     }
   };
-
-  const [command, setCommand] = useState<string>(() => createCommand());
-
-  useEffect(() => {
-    setCommand(createCommand());
-  }, [selected]);
 
   return (
     <div className="flex flex-col bg-card w-full h-24 rounded-2xl border border-border">
@@ -42,7 +45,7 @@ export function Installation({ name }: { name: string }) {
                 key={installer}
                 variant={selected === installer ? "default" : "outline"}
                 className="h-7"
-                onClick={() => setSelected(installer)}
+                onClick={() => handleClick(installer)}
               >
                 {installer}
               </Button>

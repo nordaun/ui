@@ -1,7 +1,8 @@
-import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Metadata } from "next";
 import Link from "next/link";
-import registry from "registry";
+
+import { Card, CardDescription, CardTitle } from "@/components/ui/card";
+import registry from "@/registry";
 
 export const metadata: Metadata = {
   title: "Components",

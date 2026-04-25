@@ -2,6 +2,17 @@
 
 import * as MenuPrimitive from "@base-ui/react/menu";
 import * as SliderPrimitive from "@base-ui/react/slider";
+import * as React from "react";
+
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Slider } from "@/components/ui/slider";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 import {
   Check,
   Gauge,
@@ -16,18 +27,6 @@ import {
   Volume2,
   VolumeX,
 } from "lucide-react";
-import * as React from "react";
-
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Slider } from "@/components/ui/slider";
-import { useIsMobile } from "@/hooks/use-mobile";
-
-import { cn } from "@/lib/utils";
 
 type VideoContext = {
   videoRef: React.RefObject<HTMLVideoElement | null>;

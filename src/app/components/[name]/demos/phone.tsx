@@ -9,3 +9,13 @@ export default function PhoneDemo() {
   );
 }
 // END
+
+export const keywords = [
+  "shadcn",
+  "base ui",
+  "react",
+  "component",
+  "phone",
+  "input",
+  "countries",
+];
