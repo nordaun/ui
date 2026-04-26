@@ -33,7 +33,7 @@ export const config: Config = {
   colors,
   defaultColor: "white",
   namespace: "@nordaun",
-  url: "https://vorhdam-registry.vercel.app",
+  url: "https://ui.nordaun.com",
   github: {
     author: "https://github.com/vorhdam",
     brand: "https://github.com/nordaun",

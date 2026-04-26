@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "@nordaun/ui",
-  "homepage": "https://vorhdam-registry.vercel.app",
+  "homepage": "https://ui.nordaun.com",
   "items": [
     {
       "name": "audio",
