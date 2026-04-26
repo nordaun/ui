@@ -37,6 +37,6 @@ export const config: Config = {
   github: {
     author: "https://github.com/vorhdam",
     brand: "https://github.com/nordaun",
-    project: "https://github.com/vorhdam/registry",
+    project: "https://github.com/nordaun/ui",
   },
 };

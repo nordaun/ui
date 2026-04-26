@@ -22,4 +22,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ### License
 
-We deeply encourage Open Source, thus this project has an MIT License. You can use, modify, merge, publish, distribute, sublicense, and/or sell any copy of this registry. View the [LICENSE]("https://github.com/vorhdam/registry/blob/main/LICENSE") for more details.
+We deeply encourage Open Source, thus this project has an MIT License. You can use, modify, merge, publish, distribute, sublicense, and/or sell any copy of this registry. View the [LICENSE]("https://github.com/nordaun/ui/blob/main/LICENSE") for more details.
