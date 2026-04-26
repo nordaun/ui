@@ -1,6 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "vorhdam",
+  "name": "@nordaun/ui",
   "homepage": "https://vorhdam-registry.vercel.app",
   "items": [
     {

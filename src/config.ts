@@ -28,11 +28,11 @@ type Config = Readonly<{
 }>;
 
 export const config: Config = {
-  name: "vorhdamUI",
+  name: "nordaun/ui",
   brand: "Nordaun",
   colors,
   defaultColor: "white",
-  namespace: "@vorhdam",
+  namespace: "@nordaun",
   url: "https://vorhdam-registry.vercel.app",
   github: {
     author: "https://github.com/vorhdam",

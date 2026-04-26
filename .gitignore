@@ -12,6 +12,7 @@
 
 # testing
 /coverage
+/public/assets/*.webm
 
 # next.js
 /.next/

@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { config } from "@/config";
 import { Moon, Sun } from "lucide-react";
+import { Logo } from "./logo";
 
 export function Header() {
   const { theme, setTheme } = useTheme();
@@ -29,7 +30,12 @@ export function Header() {
   return (
     <header className="flex items-center md:justify-between justify-center w-dvw py-2 px-8 h-14 sticky top-0 z-50 bg-background">
       <div className="absolute top-14 h-5 bg-linear-to-b from-background to-transparent z-50 w-dvw" />
-      <div className="not-md:hidden" />
+      <div className="not-md:hidden">
+        <Link href="/" className="flex flex-row items-center h-3.5 gap-1">
+          <Logo />
+          <span className="select-none text-lg">/ui</span>
+        </Link>
+      </div>
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
@@ -67,7 +73,7 @@ export function Header() {
               <span>Select a theme</span>
             </div>
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="p-1">
             {config.colors.map((c) => (
               <SelectItem key={c} value={c} onClick={() => setColor(c)}>
                 {c}

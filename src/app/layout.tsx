@@ -25,6 +25,21 @@ export const metadata: Metadata = {
     default: config.name,
   },
   description: "Simple components for your extraordinary creations.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      {
+        url: "/light.ico",
+        sizes: "any",
+        media: "(prefers-color-scheme: dark)",
+      },
+      {
+        url: "/dark.ico",
+        sizes: "any",
+        media: "(prefers-color-scheme: light)",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

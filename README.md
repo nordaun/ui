@@ -1,14 +1,14 @@
-# Vorhdam Registry
+# Nordaun/ui
 
 ### Simple components for your extraordinary creations
 
 A collection of beatifully designed components that extend the boundaries of shadcn while staying consistent, modular and of course clean. This registry is a collection the components we use daily throughout our work. We decided to make it public so you can add them to your projects too.
 
 <p align="center">
-    <img src="/assets/header.png"/>
+    <img src="/assets/banner.png"/>
 </p>
 
-**DISCLAMER: This registry only works with BaseUI currently. However we are planning on making it work with Radix UI too in the near future.**
+**DISCLAMER: This registry only works with BaseUI currently. However we are working on making it compatible with Radix UI in the near future.**
 
 ### Contributing
 

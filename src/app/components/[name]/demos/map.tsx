@@ -138,7 +138,7 @@ export default function MapDemo() {
               </MapMarker>
             ))}
           </MapMarkers>
-          <MapCopyright title="vorhdam" />
+          <MapCopyright title="Nordaun" />
         </Map>
       </MapProvider>
     </div>
