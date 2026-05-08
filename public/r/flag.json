@@ -3,7 +3,7 @@
   "name": "flag",
   "title": "Flag",
   "author": "vorhdam <https://github.com/vorhdam>",
-  "description": "A simple flag displayer which renders a vector image of the selected country's flag.",
+  "description": "A simple flag display which renders a vector image of the selected country's flag by its country code.",
   "files": [
     {
       "path": "src/components/ui/flag.tsx",

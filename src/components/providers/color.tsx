@@ -17,7 +17,7 @@ export const ColorContext = createContext<ColorContextType>({
 });
 
 export default function ColorProvider({ children }: { children: ReactNode }) {
-  const cookieName = "NEXT_COLOR";
+  const cookieName = "COLOR";
   const colors = config.colors;
   const defaultColor = config.defaultColor;
 

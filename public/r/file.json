@@ -3,7 +3,7 @@
   "name": "file",
   "title": "File",
   "author": "vorhdam <https://github.com/vorhdam>",
-  "description": "A context-based file uploader with customizable texts and icons and a built-in workflow.",
+  "description": "A context-based file uploader with customizable titles, descriptions and icons and a built-in workflow.",
   "dependencies": [
     "lucide-react"
   ],

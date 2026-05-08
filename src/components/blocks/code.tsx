@@ -1,11 +1,13 @@
 "use client";
 
+// Only God knows how this works, but it does.
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Code, Copy } from "lucide-react";
 
-type Token = {
+type TokenSpec = {
   keywords: RegExp;
   types: RegExp;
   strings: RegExp;
@@ -15,9 +17,12 @@ type Token = {
   functions: RegExp;
   properties: RegExp;
   components: RegExp;
+  htmlElement: RegExp;
+  jsxText: RegExp;
+  variable: RegExp;
 };
 
-const tokenSpec: Token = {
+const tokenSpec: TokenSpec = {
   keywords:
     /\b(const|let|var|function|return|if|else|for|while|do|switch|case|break|continue|new|delete|typeof|instanceof|void|throw|try|catch|finally|class|extends|super|import|export|default|from|of|in|async|await|yield|static|get|set|null|undefined|true|false|this|prototype|type|interface|enum)\b/g,
   types:
@@ -30,6 +35,9 @@ const tokenSpec: Token = {
   functions: /\b(?!return\b)([a-zA-Z_$][a-zA-Z0-9_]*)\s*(?=\()/g,
   properties: /([a-zA-Z-]+\s*(?==))/g,
   components: /(?<!function\s+)\b([A-Z][a-zA-Z0-9]+)\b/g,
+  htmlElement: /(?<=<\/?)[a-z][a-zA-Z0-9]*/g,
+  jsxText: /(?<=[^!=<>]>)([^<{}\n]+)(?=<\/)/g,
+  variable: /\b[a-z_$][a-zA-Z0-9_$]*\b/g,
 };
 
 const tokenClasses: Record<string, string> = {
@@ -43,19 +51,23 @@ const tokenClasses: Record<string, string> = {
   property: "text-[#D19A66]",
   component: "text-[#E5C07B]",
   plain: "text-[#ACB2BF]",
+  htmlElement: "text-[#E06C75]",
+  jsxText: "text-[#ACB2BF]",
+  variable: "text-[#E06C75]",
 };
+
+type MaskType = "comment" | "string" | "jsxText";
 
 function tokenize(code: string) {
   const len = code.length;
   const tokens: Array<{
-    type: "comment" | "string" | "code";
+    type: "comment" | "string" | "jsxText" | "code";
     value: string;
   }> = [];
 
-  // Mark regions by priority: comments > strings > everything else
-  const masked: Array<"comment" | "string" | null> = new Array(len).fill(null);
+  const masked: Array<MaskType | null> = new Array(len).fill(null);
 
-  const markRegion = (regex: RegExp | null, type: "comment" | "string") => {
+  const markRegion = (regex: RegExp | null, type: MaskType) => {
     if (!regex) return;
     regex.lastIndex = 0;
     let m;
@@ -68,14 +80,15 @@ function tokenize(code: string) {
 
   markRegion(tokenSpec.comments || null, "comment");
   markRegion(tokenSpec.strings || null, "string");
+  markRegion(tokenSpec.jsxText || null, "jsxText");
 
   let i = 0;
   while (i < len) {
-    if (masked[i] === "comment" || masked[i] === "string") {
-      const type = masked[i] as "comment" | "string";
+    const cur = masked[i];
+    if (cur === "comment" || cur === "string" || cur === "jsxText") {
       let j = i;
-      while (j < len && masked[j] === type) j++;
-      tokens.push({ type, value: code.slice(i, j) });
+      while (j < len && masked[j] === cur) j++;
+      tokens.push({ type: cur, value: code.slice(i, j) });
       i = j;
     } else {
       let j = i;
@@ -104,7 +117,9 @@ function tokenize(code: string) {
         | "property"
         | "number"
         | "operator"
-        | "component";
+        | "component"
+        | "htmlElement"
+        | "variable";
       value: string;
     }> = [];
 
@@ -118,7 +133,9 @@ function tokenize(code: string) {
         | "property"
         | "number"
         | "operator"
-        | "component",
+        | "component"
+        | "htmlElement"
+        | "variable",
     ) => {
       if (!regex) return;
       const r = new RegExp(
@@ -144,6 +161,8 @@ function tokenize(code: string) {
     collect(tokenSpec.operators || null, "operator");
     collect(tokenSpec.components || null, "component");
     collect(tokenSpec.functions || null, "function");
+    collect(tokenSpec.htmlElement || null, "htmlElement");
+    collect(tokenSpec.variable || null, "variable");
 
     const used = new Array(seg.length).fill(false);
     const sorted = matches.sort(
@@ -183,7 +202,30 @@ function tokenize(code: string) {
   return final;
 }
 
+function isJsxTextLine(line: string): boolean {
+  const trimmed = line.trim();
+  if (!trimmed) return false;
+  if (/[<>{};=()[\]"'`]/.test(trimmed)) return false;
+  if (/[,;]$/.test(trimmed)) return false;
+  if (
+    /^\b(import|export|const|let|var|return|function|class|if|else)\b/.test(
+      trimmed,
+    )
+  )
+    return false;
+  if (!/\s/.test(trimmed)) return false;
+  return /^[A-Za-z0-9\s©®™°….,!?@#%*&$+\-/\\]+$/.test(trimmed);
+}
+
 function renderLine(line: string, lineIdx: number) {
+  if (isJsxTextLine(line)) {
+    return (
+      <span key={lineIdx} className={tokenClasses.jsxText}>
+        {line}
+      </span>
+    );
+  }
+
   const tokens = tokenize(line);
   return (
     <span key={lineIdx}>

@@ -5,6 +5,7 @@ import "./globals.css";
 import { Footer } from "@/components/blocks/footer";
 import { Header } from "@/components/blocks/header";
 import ColorProvider from "@/components/providers/color";
+import InstallerProvider from "@/components/providers/installer";
 import ThemeProvider from "@/components/providers/theme";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { config } from "@/config";
@@ -54,13 +55,15 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <ColorProvider>
-            <TooltipProvider>
-              <Header />
-              <main className="flex justify-center items-center min-h-[calc(100vh-8rem)] h-full w-full selection:bg-primary selection:text-primary-foreground">
-                {children}
-              </main>
-              <Footer />
-            </TooltipProvider>
+            <InstallerProvider>
+              <TooltipProvider>
+                <Header />
+                <main className="flex justify-center items-center min-h-[calc(100vh-8rem)] h-full w-full selection:bg-primary selection:text-primary-foreground">
+                  {children}
+                </main>
+                <Footer />
+              </TooltipProvider>
+            </InstallerProvider>
           </ColorProvider>
         </ThemeProvider>
       </body>

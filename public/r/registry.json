@@ -21,7 +21,7 @@
     {
       "name": "file",
       "title": "File",
-      "description": "A context-based file uploader with customizable texts and icons and a built-in workflow.",
+      "description": "A context-based file uploader with customizable titles, descriptions and icons and a built-in workflow.",
       "author": "vorhdam <https://github.com/vorhdam>",
       "type": "registry:block",
       "dependencies": ["lucide-react"],
@@ -59,7 +59,7 @@
     {
       "name": "flag",
       "title": "Flag",
-      "description": "A simple flag displayer which renders a vector image of the selected country's flag.",
+      "description": "A simple flag display which renders a vector image of the selected country's flag by its country code.",
       "author": "vorhdam <https://github.com/vorhdam>",
       "type": "registry:block",
       "files": [
@@ -119,7 +119,7 @@
     {
       "name": "password",
       "title": "Password",
-      "description": "A super simple password input with a toggleable view button that hides or reveals your password.",
+      "description": "A super simple password input component with a toggle options that hides or reveals your password.",
       "author": "vorhdam <https://github.com/vorhdam>",
       "type": "registry:block",
       "dependencies": ["lucide-react"],

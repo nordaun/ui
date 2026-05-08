@@ -2,9 +2,8 @@
 
 import { useTheme } from "next-themes";
 import Link from "next/link";
-import { useContext } from "react";
 
-import { ColorContext } from "@/components/providers/color";
+import { Logo } from "@/components/blocks/logo";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -20,12 +19,12 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 import { config } from "@/config";
+import { useColor } from "@/hooks/use-color";
 import { Moon, Sun } from "lucide-react";
-import { Logo } from "./logo";
 
 export function Header() {
   const { theme, setTheme } = useTheme();
-  const { color, setColor } = useContext(ColorContext);
+  const { color, setColor } = useColor();
 
   return (
     <header className="flex items-center md:justify-between justify-center w-dvw py-2 px-8 h-14 sticky top-0 z-50 bg-background">

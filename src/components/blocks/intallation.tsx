@@ -4,22 +4,12 @@ import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { config } from "@/config";
+import { config, Installer } from "@/config";
+import { useInstaller } from "@/hooks/use-installer";
 import { Copy, Terminal } from "lucide-react";
 
 export function Installation({ name }: { name: string }) {
-  const installers = ["npm", "yarn", "pnpm", "bun"] as const;
-  type Installer = (typeof installers)[number];
-
-  const [selected, setSelected] = useState<Installer>("bun");
-  const [command, setCommand] = useState<string>(
-    `bunx --bun shadcn@latest add ${config.namespace}/${name}`,
-  );
-
-  const handleClick = (installer: Installer) => {
-    setSelected(installer);
-    setCommand(createCommand(installer));
-  };
+  const { installer, setInstaller } = useInstaller();
 
   const createCommand = (installer: Installer): string => {
     switch (installer) {
@@ -34,20 +24,28 @@ export function Installation({ name }: { name: string }) {
     }
   };
 
+  const defaultCommand = createCommand(config.defaultInstaller);
+  const [command, setCommand] = useState<string>(defaultCommand);
+
+  const handleClick = (installer: Installer) => {
+    setInstaller(installer);
+    setCommand(createCommand(installer));
+  };
+
   return (
     <div className="flex flex-col bg-card w-full h-24 rounded-2xl border border-border">
       <div className="flex h-full flex-1 justify-between items-center px-4">
         <div className="flex flex-row gap-4 items-center">
           <Terminal className="size-5 text-muted-foreground" />
           <div className="flex gap-2">
-            {installers.map((installer) => (
+            {config.installers.map((i) => (
               <Button
-                key={installer}
-                variant={selected === installer ? "default" : "outline"}
+                key={i}
+                variant={installer === i ? "default" : "outline"}
                 className="h-7"
-                onClick={() => handleClick(installer)}
+                onClick={() => handleClick(i)}
               >
-                {installer}
+                {i}
               </Button>
             ))}
           </div>
