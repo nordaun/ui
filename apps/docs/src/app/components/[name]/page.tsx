@@ -60,7 +60,7 @@ export default async function ComponentPage({ params }: PageProps) {
   );
   const fileContent = await fs.readFile(filePath, "utf8");
   const match = fileContent.match(/\/\/ START([\s\S]*?)\/\/ END/);
-  const code = match ? match[1].trim() : "";
+  const code = match ? match[1]?.trim() : "";
 
   const Component = dynamic(() => import(`./demos/${component.name}.tsx`));
 
