@@ -1,0 +1,27 @@
+{
+  "name": "@repo/theme",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./src/index.tsx"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "generate:component": "turbo gen react-component",
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@repo/eslint": "*",
+    "@repo/typescript": "*",
+    "@types/node": "^20",
+    "eslint": "^9.39.1",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@types/js-cookie": "^3.0.6",
+    "@types/react": "^19.2.14",
+    "js-cookie": "^3.0.5",
+    "react": "^19.2.6"
+  }
+}
