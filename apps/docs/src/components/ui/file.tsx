@@ -380,7 +380,7 @@ function FileLoader({
 }: React.ComponentProps<"div">) {
   const { progress } = useFiles();
 
-  if (!Boolean(progress)) return null;
+  if (!progress) return null;
 
   return (
     <div

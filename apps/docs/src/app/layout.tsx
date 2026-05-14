@@ -6,8 +6,8 @@ import { Footer } from "@/components/blocks/footer";
 import { Header } from "@/components/blocks/header";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { config } from "@repo/config";
-import { ThemeProvider } from "@repo/theme";
-import { ColorProvider } from "@repo/color";
+import { ThemeProvider } from "@nordaun/theme";
+import { ColorProvider } from "@nordaun/color";
 import InstallerProvider from "@/components/providers/installer";
 
 const geistSans = Geist({

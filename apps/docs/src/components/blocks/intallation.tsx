@@ -8,10 +8,10 @@ import { config, Installer } from "@repo/config";
 import { useInstaller } from "@/hooks/use-installer";
 import { Copy, Terminal } from "lucide-react";
 
-export function Installation({ name }: { name: string }) {
+export function Installation({ name, type }: { name: string, type: "component" | "package" }) {
   const { installer, setInstaller } = useInstaller();
 
-  const createCommand = (installer: Installer): string => {
+  const createComponentCommand = (installer: Installer): string => {
     switch (installer) {
       case "npm":
         return `npx shadcn@latest add ${config.namespace}/${name}`;
@@ -23,6 +23,25 @@ export function Installation({ name }: { name: string }) {
         return `bunx --bun shadcn@latest add ${config.namespace}/${name}`;
     }
   };
+
+  const createPackageCommand = (installer: Installer): string => {
+    switch (installer) {
+      case "npm":
+        return `npm install ${config.namespace}/${name}`;
+      case "yarn":
+        return `yarn add ${config.namespace}/${name}`;
+      case "pnpm":
+        return `pnpm add ${config.namespace}/${name}`;
+      case "bun":
+        return `bun add ${config.namespace}/${name}`;
+    }
+  };
+
+  const createCommand = (installer: Installer): string => {
+    if (type === "component") return createComponentCommand(installer);
+    if (type === "package") return createPackageCommand(installer);
+    return ""
+  }
 
   const defaultCommand = createCommand(config.defaultInstaller);
   const [command, setCommand] = useState<string>(defaultCommand);

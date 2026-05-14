@@ -219,7 +219,6 @@ function AudioPlayer({
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={handleEnded}
-        playsInline
         {...props}
       />
       <div className="flex items-center justify-between w-full gap-2">

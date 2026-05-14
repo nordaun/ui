@@ -1,15 +1,19 @@
 {
-  "name": "@repo/color",
+  "name": "@nordaun/color",
   "version": "0.0.0",
   "type": "module",
-  "private": true,
   "exports": {
     ".": "./src/index.tsx"
   },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "lint": "eslint . --max-warnings 0",
     "generate:component": "turbo gen react-component",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "package:build": "tsup ./src/index.tsx --format cjs,esm --dts",
+    "package:dev": "tsup ./src/index.tsx --format cjs,esm --dts --watch"
   },
   "devDependencies": {
     "@repo/eslint": "*",

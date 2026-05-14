@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "name": "theme",
+      "title": "Theme",
+      "description": "A simple theme provider for any React or Next.js application to toggle between light and dark mode preferences."
+    },
+    {
+      "name": "color",
+      "title": "Color",
+      "description": "A simple color provider for any React or Next.js application to enable you view your components the way you like."
+    }
+  ]
+}

@@ -18,8 +18,8 @@ import {
 } from "@/components/ui/select";
 import { config } from "@repo/config";
 import { Moon, Sun } from "lucide-react";
-import { useTheme } from "@repo/theme";
-import { useColor } from "@repo/color";
+import { useTheme } from "@nordaun/theme";
+import { useColor } from "@nordaun/color";
 
 export function Header() {
   const { theme, setTheme } = useTheme();
@@ -40,6 +40,12 @@ export function Header() {
             <NavigationMenuLink
               className={navigationMenuTriggerStyle()}
               render={<Link href="/components">Components</Link>}
+            />
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              className={navigationMenuTriggerStyle()}
+              render={<Link href="/packages">Packages</Link>}
             />
           </NavigationMenuItem>
           <NavigationMenuItem>

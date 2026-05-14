@@ -3,6 +3,9 @@
 import * as React from "react";
 import cookies from "js-cookie";
 
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
+
 const themes = ["light", "dark", "system"] as const;
 const resolvable = ["light", "dark"] as const;
 
@@ -23,6 +26,15 @@ const ThemeContext = React.createContext<ThemeContextType>({
   loading: true,
 });
 
+/**
+ * ### useTheme()
+ * @example
+ *  const { theme, themes, setTheme } = useTheme()
+ * 
+ *  console.log(theme) // logs the current theme
+ *  console.log(themes) // logs all available themes
+ *  setTheme("dark") // sets dark as the new theme
+ */
 function useTheme() {
   return React.useContext(ThemeContext);
 }
@@ -63,6 +75,22 @@ function applyTheme(resolved: Resolvable, disableTransition = false) {
   if (disableTransition) disableAnimation();
 }
 
+/**
+ * ### ThemeProvider
+ * @param cookieName The name of the cookie the color should be stored.
+ * @param defaultTheme The theme that should be the fallback and default.
+ * @param disableTransition Whether transition animations should be disabled.
+ * @param enableSystem Whether the component should have access to the user's prefered theme.
+ * @example 
+ *  <ColorProvider
+ *     cookieName="THEME_COOKIE"
+ *     defaultColor="system"
+ *     disableTransition
+ *     enableSystem
+ *  >
+ *       {children}
+ *  </ColorProvider>
+ */
 function ThemeProvider({
   cookieName = "THEME",
   defaultTheme,
@@ -71,27 +99,35 @@ function ThemeProvider({
   children,
 }: ThemeProviderProps) {
   const available = enableSystem ? themes : resolvable;
-
-  const [current, setCurrent] = React.useState<Theme>(() => {
-    if (typeof window === "undefined") return defaultTheme;
-    const saved = cookies.get(cookieName) as Theme | undefined;
-    if (saved && (available as readonly string[]).includes(saved)) return saved;
-    return defaultTheme;
-  });
-
-  const [systemTheme, setSystemTheme] = React.useState<Resolvable>(() =>
-    getSystemTheme(),
-  );
-
+  const [current, setCurrent] = React.useState<Theme>(defaultTheme);
+  const [systemTheme, setSystemTheme] = React.useState<Resolvable>("light");
+  const [loading, setLoading] = React.useState(true);
   const resolved: Resolvable = current === "system" ? systemTheme : current;
 
-  const [loading, setLoading] = React.useState(true);
+  useIsomorphicLayoutEffect(() => {
+    const sys = getSystemTheme();
+    setSystemTheme(sys);
 
-  React.useEffect(() => {
+    const saved = cookies.get(cookieName) as Theme | undefined;
+    const initial: Theme =
+      saved && (available as readonly string[]).includes(saved)
+        ? (saved as Theme)
+        : defaultTheme;
+
+    const resolvedInitial: Resolvable =
+      initial === "system" ? sys : (initial as Resolvable);
+
+    setCurrent(initial);
+    applyTheme(resolvedInitial, disableTransition);
+    cookies.set(cookieName, initial, { expires: 365, sameSite: "lax" });
+    setLoading(false);
+  }, []);
+
+  useIsomorphicLayoutEffect(() => {
+    if (loading) return;
     applyTheme(resolved, disableTransition);
     cookies.set(cookieName, current, { expires: 365, sameSite: "lax" });
-    setLoading(false);
-  }, [resolved, current, cookieName, disableTransition]);
+  }, [resolved, current, cookieName, disableTransition, loading]);
 
   React.useEffect(() => {
     if (typeof window === "undefined") return;
@@ -113,27 +149,19 @@ function ThemeProvider({
   const setTheme = React.useCallback(
     (theme: Theme) => {
       if (!(available as readonly string[]).includes(theme)) return;
+      const resolvedTheme: Resolvable =
+        theme === "system" ? getSystemTheme() : (theme as Resolvable);
       setCurrent(theme);
-      applyTheme(
-        theme === "system" ? getSystemTheme() : theme,
-        disableTransition,
-      );
+      applyTheme(resolvedTheme, disableTransition);
       cookies.set(cookieName, theme, { expires: 365, sameSite: "lax" });
     },
     [cookieName, available, disableTransition],
   );
 
   const value = React.useMemo<ThemeContextType>(
-    () => ({
-      theme: resolved,
-      themes: available,
-      setTheme,
-      loading,
-    }),
+    () => ({ theme: resolved, themes: available, setTheme, loading }),
     [resolved, available, setTheme, loading],
   );
-
-  if (loading) return null;
 
   return (
     <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>

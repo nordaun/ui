@@ -1,4 +1,5 @@
 import registry from "@/registry";
+import packages from "@/packages"
 import Link from "next/link";
 
 import {
@@ -39,6 +40,18 @@ export function SidebarComponents() {
           {registry.items.map((item) => (
             <SidebarMenuItem key={item.name}>
               <Link href={`/components/${item.name}`}>
+                <SidebarMenuButton>{item.title}</SidebarMenuButton>
+              </Link>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+      </SidebarGroup>
+      <SidebarGroup>
+        <SidebarGroupLabel>Packages</SidebarGroupLabel>
+        <SidebarMenu>
+          {packages.items.map((item) => (
+            <SidebarMenuItem key={item.name}>
+              <Link href={`/packages/${item.name}`}>
                 <SidebarMenuButton>{item.title}</SidebarMenuButton>
               </Link>
             </SidebarMenuItem>

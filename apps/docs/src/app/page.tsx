@@ -45,7 +45,12 @@ export default function Page() {
       <div className="flex flex-row gap-4">
         <Link href="/components">
           <Button size={"lg"} variant={"default"} className="px-4">
-            View Components
+            Components
+          </Button>
+        </Link>
+        <Link href="/packages">
+          <Button size={"lg"} variant={"default"} className="px-4">
+            Packages
           </Button>
         </Link>
         <Link href={config.github.project}>

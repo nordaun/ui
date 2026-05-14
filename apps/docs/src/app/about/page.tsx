@@ -52,7 +52,7 @@ export default function AboutPage() {
           not included in shadcn's library. So we did what any reasonable person
           would do. We made it opensource so you can enjoy it too. Now the
           project is under MIT license. Also me{" "}
-          <i>(who is writing this page)</i> is a self-taught developer learned a
+          <i>(who is writing this page)</i> is a self-taught developer who learned a
           lot from open-source projects. So it is a win-win.
         </span>
       </div>

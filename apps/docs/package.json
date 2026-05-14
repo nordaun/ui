@@ -29,8 +29,8 @@
   "devDependencies": {
     "@repo/eslint": "*",
     "@repo/typescript": "*",
-    "@repo/theme": "*",
-    "@repo/color": "*",
+    "@nordaun/theme": "*",
+    "@nordaun/color": "*",
     "@repo/config": "*",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",

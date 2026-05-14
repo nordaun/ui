@@ -20,7 +20,8 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@/registry": ["./registry.json"]
+      "@/registry": ["./registry.json"],
+      "@/packages": ["./packages.json"]
     }
   },
   "include": [
