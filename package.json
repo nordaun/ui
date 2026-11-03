@@ -18,7 +18,7 @@
   ],
   "private": true,
   "scripts": {
-    "build": "bun --bun turbo run build",
+    "build": "npx turbo run build",
     "dev": "bun --bun turbo run dev",
     "start": "bun --bun turbo run start",
     "lint": "bun --bun turbo run lint",
