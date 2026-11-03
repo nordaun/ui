@@ -10,9 +10,6 @@
     "registry:build": {
       "outputs": ["dist/**"]
     },
-    "package:build": {
-      "outputs": ["dist/**"]
-    },
     "lint": {
       "dependsOn": ["^lint"]
     },
