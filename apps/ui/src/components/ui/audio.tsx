@@ -597,9 +597,13 @@ function Waveform({
   playedClassName?: string;
   unplayedClassName?: string;
 }) {
-  const BAR_W = 3;
-  const BAR_GAP = 2;
-  const TRANSITION_SPEED = 0.08;
+  const barWidth = 3;
+  const barGap = 2;
+  const transitionSpeed = 0.08;
+  const minHz = 20;
+  const maxHz = 20000;
+  const lowGain = Math.PI / 10;
+  const highGain = Math.E;
 
   const { analyserRef, paused, audioRef } = React.useContext(Context);
   const wrapperRef = React.useRef<HTMLDivElement>(null);
@@ -607,6 +611,11 @@ function Waveform({
   const playedStateRef = React.useRef<boolean[]>([]);
   const rafRef = React.useRef<number>(0);
   const blendRef = React.useRef<number>(paused ? 1 : 0);
+  const freqDataRef = React.useRef<Uint8Array<ArrayBuffer> | null>(null);
+  const bandsRef = React.useRef<{
+    key: string;
+    ranges: (readonly [number, number])[];
+  } | null>(null);
   const [barCount, setBarCount] = React.useState(0);
 
   const progress = React.useMemo(() => {
@@ -615,13 +624,14 @@ function Waveform({
         (audioRef.current?.duration ?? 0)) *
       100
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [audioRef.current?.currentTime, audioRef.current?.duration]);
 
   React.useEffect(() => {
     const wrapper = wrapperRef.current;
     if (!wrapper) return;
     const ro = new ResizeObserver(() => {
-      setBarCount(Math.floor(wrapper.clientWidth / (BAR_W + BAR_GAP)));
+      setBarCount(Math.floor(wrapper.clientWidth / (barWidth + barGap)));
     });
     ro.observe(wrapper);
     return () => ro.disconnect();
@@ -645,10 +655,27 @@ function Waveform({
 
     const target = paused ? 1 : 0;
 
+    const getBandRanges = (binCount: number, sampleRate: number) => {
+      const nyquist = sampleRate / 2;
+      const hzPerBin = nyquist / binCount;
+      const maximumHz = Math.min(maxHz, nyquist);
+
+      return Array.from({ length: barCount }, (_, i) => {
+        const lo = minHz * (maximumHz / minHz) ** (i / barCount);
+        const hi = minHz * (maximumHz / minHz) ** ((i + 1) / barCount);
+        const start = Math.min(binCount - 1, Math.floor(lo / hzPerBin));
+        const end = Math.min(
+          binCount,
+          Math.max(start + 1, Math.ceil(hi / hzPerBin)),
+        );
+        return [start, end] as const;
+      });
+    };
+
     const animate = () => {
       rafRef.current = requestAnimationFrame(animate);
 
-      blendRef.current += (target - blendRef.current) * TRANSITION_SPEED;
+      blendRef.current += (target - blendRef.current) * transitionSpeed;
       if (Math.abs(blendRef.current - target) < 0.001)
         blendRef.current = target;
       const blend = blendRef.current;
@@ -656,19 +683,41 @@ function Waveform({
       const analyser = analyserRef.current;
       let freqData: Uint8Array<ArrayBuffer> | null = null;
       if (analyser) {
-        freqData = new Uint8Array(
-          analyser.frequencyBinCount,
-        ) as Uint8Array<ArrayBuffer>;
+        const binCount = analyser.frequencyBinCount;
+        if (freqDataRef.current?.length !== binCount) {
+          freqDataRef.current = new Uint8Array(
+            binCount,
+          ) as Uint8Array<ArrayBuffer>;
+        }
+        freqData = freqDataRef.current;
         analyser.getByteFrequencyData(freqData);
+
+        const sampleRate = analyser.context.sampleRate;
+        const key = `${barCount}-${binCount}-${sampleRate}`;
+        if (bandsRef.current?.key !== key) {
+          bandsRef.current = {
+            key,
+            ranges: getBandRanges(binCount, sampleRate),
+          };
+        }
       }
-      const step = freqData ? Math.floor(freqData.length / barCount) : 1;
 
       for (let i = 0; i < barCount; i++) {
         const bar = barsRef.current[i];
         if (!bar) continue;
 
         const t = i / barCount;
-        const liveValue = freqData ? freqData[i * step]! / 255 : 0;
+
+        let liveValue = 0;
+        if (freqData && bandsRef.current) {
+          const [start, end] = bandsRef.current.ranges[i]!;
+          let sum = 0;
+          for (let b = start; b < end; b++) sum += freqData[b]!;
+          const avg = sum / (end - start) / 255;
+          const gain = lowGain * (highGain / lowGain) ** t;
+          liveValue = Math.min(1, avg * gain);
+        }
+
         const value = liveValue * (1 - blend) + staticHeights[i]! * blend;
 
         bar.style.height = `${Math.max(15, value * 100)}%`;
@@ -703,7 +752,7 @@ function Waveform({
         "flex-1 h-8 flex items-center overflow-hidden cursor-pointer",
         className,
       )}
-      style={{ gap: `${BAR_GAP}px` }}
+      style={{ gap: `${barGap}px` }}
     >
       {Array.from({ length: barCount }, (_, index) => {
         const initialValue = staticHeights[index]
@@ -717,7 +766,7 @@ function Waveform({
             }}
             className={cn("shrink-0 rounded-full", unplayedClassName)}
             style={{
-              width: `${BAR_W}px`,
+              width: `${barWidth}px`,
               height: `${Math.max(15, initialValue)}%`,
             }}
           />
