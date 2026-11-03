@@ -18,13 +18,12 @@
   ],
   "private": true,
   "scripts": {
-    "build": "npx turbo run build",
-    "dev": "bun --bun turbo run dev",
-    "start": "bun --bun turbo run start",
-    "lint": "bun --bun turbo run lint",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "bun --bun turbo run check-types",
-    "registry:build": "bun --bun turbo run registry:build"
+    "check-types": "turbo run check-types",
+    "registry:build": "turbo run registry:build"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.3",
