@@ -46,7 +46,7 @@ console.log("All avialable themes:", themes);
 setTheme("system");
 ```
 
-### Example
+### Real-life example
 
-The site that host the documentation of this package was built using `@nordaun/theme`.
+The site that hosts the documentation for this package was built using `@nordaun/theme`.
 You can interact with the theme selector at the header of [this page](https://ui.nordaun.com/packages/theme)

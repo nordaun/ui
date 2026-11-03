@@ -21,16 +21,19 @@ const ColorContext = React.createContext<ColorContextType>({
 });
 
 /**
- * ### useColor()
+ * ## useColor()
  * @example
  *  const { color, colors, setColor } = useColor()
- * 
- *  console.log(color) // logs the current color
- *  console.log(colors) // logs all available colors
- *  setColor("purple") // sets purple as the new color
+ *
+ *  console.log(color) // logs the current color.
+ *  console.log(colors) // logs all available colors.
+ *  setColor("purple") // sets purple as the new color.
  */
 function useColor<T extends string = string>() {
-  return React.useContext(ColorContext) as unknown as ColorContextType<T>;
+  const context = React.useContext(ColorContext);
+  if (!context)
+    throw new Error("useColor() must be used within a ColorProvider.");
+  return context as unknown as ColorContextType<T>;
 }
 
 type ColorProviderProps<T extends string> = {
@@ -59,13 +62,13 @@ function applyColor(
 }
 
 /**
- * ### ColorProvider
+ * ## ColorProvider
  * @param cookieName The name of the cookie the color should be stored.
  * @param classPrefix The className prefix that should be applied at the <html> tag.
  * @param classSuffix The className suffix that should be applied at the <html> tag.
  * @param colors The array of the colors you want to use.
  * @param defaultColor The color that should be the fallback and default.
- * @example 
+ * @example
  *  <ColorProvider
  *     cookieName="COLOR_COOKIE"
  *     classPrefix="color-"
@@ -85,7 +88,7 @@ function ColorProvider<T extends string>({
 }: ColorProviderProps<T>) {
   const [current, setCurrent] = React.useState<T>(defaultColor);
   const [loading, setLoading] = React.useState(true);
-  
+
   useIsomorphicLayoutEffect(() => {
     const saved = cookies.get(cookieName);
     const initial: T =
@@ -132,4 +135,4 @@ function ColorProvider<T extends string>({
   );
 }
 
-export { useColor, ColorProvider };
+export { ColorProvider, useColor };

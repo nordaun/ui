@@ -46,7 +46,7 @@ console.log("All avialable colors:", colors);
 setColor("red");
 ```
 
-### Example
+### Real-life example
 
-The site that host the documentation of this package was built using `@nordaun/color`.
+The site that hosts the documentation for this package was built using `@nordaun/color`.
 You can interact with the color selector at the header of [this page](https://ui.nordaun.com/packages/color)
