@@ -34,7 +34,6 @@
     "@nordaun/theme": "*",
     "@repo/config": "*",
     "@repo/eslint": "*",
-    "@repo/ratelimit": "*",
     "@repo/typescript": "*",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
