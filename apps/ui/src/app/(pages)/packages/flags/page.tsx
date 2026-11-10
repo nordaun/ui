@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: component.title,
     description: component.description,
     authors: [{ name: "vorhdam", url: "https://github.com/vorhdam" }],
-    publisher: config.name,
+    publisher: config.brand,
     keywords: ["shadcn", "base ui", "react", "component"],
     openGraph: {
       title: component.title,

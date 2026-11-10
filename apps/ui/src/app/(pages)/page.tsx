@@ -17,11 +17,11 @@ const satisfy = Satisfy({
 });
 
 export const metadata: Metadata = {
-  title: `Home | ${config.name}`,
+  title: `Home | ${config.brand}`,
   description:
     "A collection of beatifully designed components that extend the boundaries of shadcn while staying consistent, modular and of course clean.",
   authors: [{ name: "vorhdam", url: "https://github.com/vorhdam" }],
-  publisher: config.name,
+  publisher: config.brand,
   keywords: ["shadcn", "base ui", "react", "component", "home"],
   openGraph: {
     title: "Home",

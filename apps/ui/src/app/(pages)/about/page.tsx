@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "About",
   description: "A few words about this project and how we design components.",
   authors: [{ name: "vorhdam", url: "https://github.com/vorhdam" }],
-  publisher: config.name,
+  publisher: config.brand,
   keywords: ["shadcn", "base ui", "react", "component", "about"],
   openGraph: {
     title: "About",

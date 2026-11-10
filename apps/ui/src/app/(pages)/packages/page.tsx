@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description:
     "Here you can find all the packages available in the NPM registry.",
   authors: [{ name: "vorhdam", url: "https://github.com/vorhdam" }],
-  publisher: config.name,
+  publisher: config.brand,
   keywords: ["shadcn", "base ui", "react", "component", "package"],
   openGraph: {
     title: "Packages",

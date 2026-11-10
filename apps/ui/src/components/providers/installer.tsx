@@ -11,7 +11,7 @@ type InstallerContextType = {
 };
 
 export const InstallerContext = createContext<InstallerContextType>({
-  installer: config.installer.defaultInstaller,
+  installer: config.ui.installer.defaultInstaller,
   setInstaller: () => {},
   loading: true,
 });
@@ -21,7 +21,7 @@ export default function InstallerProvider({
 }: {
   children: ReactNode;
 }) {
-  const { cookieName, installers, defaultInstaller } = config.installer;
+  const { cookieName, installers, defaultInstaller } = config.ui.installer;
 
   const [current, setCurrent] = useState<Installer>(() => {
     let initialInstaller = cookies.get(cookieName) as Installer;

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description:
     "Here you can find all the components available in the registry.",
   authors: [{ name: "vorhdam", url: "https://github.com/vorhdam" }],
-  publisher: config.name,
+  publisher: config.brand,
   keywords: ["shadcn", "base ui", "react", "component"],
   openGraph: {
     title: "Components",

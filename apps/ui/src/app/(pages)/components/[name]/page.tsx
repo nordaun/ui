@@ -32,7 +32,7 @@ export async function generateMetadata({
     title: component.title,
     description: component.description,
     authors: [{ name: "vorhdam", url: "https://github.com/vorhdam" }],
-    publisher: config.name,
+    publisher: config.brand,
     keywords: properties.keywords || [
       "shadcn",
       "base ui",

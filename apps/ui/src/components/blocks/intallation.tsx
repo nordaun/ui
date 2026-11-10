@@ -16,8 +16,8 @@ export function Installation({
   type: "component" | "package";
 }) {
   const { installer, setInstaller } = useInstaller();
-  const { installers, defaultInstaller } = config.installer;
-  const { namespace } = config.ui;
+  const { installers, defaultInstaller } = config.ui.installer;
+  const { namespace } = config;
 
   const createComponentCommand = (installer: Installer): string => {
     switch (installer) {

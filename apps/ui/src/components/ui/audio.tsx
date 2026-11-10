@@ -741,6 +741,8 @@ function Waveform({
     progress,
     barCount,
     staticHeights,
+    lowGain,
+    highGain,
     playedClassName,
     unplayedClassName,
   ]);
