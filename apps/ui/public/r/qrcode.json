@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "qrcode",
+  "title": "QR Code",
+  "author": "vorhdam <https://github.com/vorhdam>",
+  "description": "A simple QR Code renderer that can also display logos as svgs.",
+  "dependencies": [
+    "qrcode",
+    "@types/qrcode"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/qrcode.tsx",
+      "content": "\"use client\";\r\n\r\nimport QRCode from \"qrcode\";\r\n\r\nimport { cn } from \"cn\";\r\nimport * as React from \"react\";\r\n\r\nexport type QrCodeProps = React.ComponentProps<\"svg\"> & {\r\n  href: string;\r\n  errorCorrection?: \"L\" | \"M\" | \"Q\" | \"H\";\r\n  logoRatio?: number;\r\n  children?: React.ReactNode;\r\n};\r\n\r\nexport function QrCode({\r\n  href,\r\n  errorCorrection,\r\n  logoRatio = 0.22,\r\n  className,\r\n  children,\r\n  ...props\r\n}: QrCodeProps) {\r\n  const hasLogo = React.Children.count(children) > 0;\r\n  const errorCorrectionLevel = errorCorrection ?? (hasLogo ? \"H\" : \"M\");\r\n\r\n  const { path, count, cutout, start } = React.useMemo(() => {\r\n    const { modules } = QRCode.create(href, { errorCorrectionLevel });\r\n    const count = modules.size;\r\n\r\n    let cutout = 0;\r\n    if (hasLogo) {\r\n      const clampedRatio = Math.min(Math.max(logoRatio, 0), 0.3);\r\n      cutout = Math.round(count * clampedRatio);\r\n      if ((count - cutout) % 2 !== 0) cutout++;\r\n    }\r\n\r\n    const start = (count - cutout) / 2;\r\n    const end = start + cutout;\r\n\r\n    const isDark = (row: number, col: number) =>\r\n      !!modules.get(row, col) &&\r\n      !(row >= start && row < end && col >= start && col < end);\r\n\r\n    let d = \"\";\r\n    for (let row = 0; row < count; row++) {\r\n      let col = 0;\r\n      while (col < count) {\r\n        if (!isDark(row, col)) {\r\n          col++;\r\n          continue;\r\n        }\r\n        const from = col;\r\n        while (col < count && isDark(row, col)) col++;\r\n        d += `M${from} ${row}h${col - from}v1h${from - col}z`;\r\n      }\r\n    }\r\n\r\n    return { path: d, count, cutout, start };\r\n  }, [href, errorCorrectionLevel, hasLogo, logoRatio]);\r\n\r\n  const total = count + 4;\r\n  const logoSize = Math.max(cutout - 2, 0);\r\n  const logoPosition = start + 3;\r\n\r\n  return (\r\n    <svg\r\n      xmlns=\"http://www.w3.org/2000/svg\"\r\n      viewBox={`0 0 ${total} ${total}`}\r\n      role=\"img\"\r\n      className={cn(\"bg-white text-black\", className)}\r\n      {...props}\r\n    >\r\n      <path\r\n        d={path}\r\n        fill=\"currentColor\"\r\n        shapeRendering=\"crispEdges\"\r\n        transform=\"translate(2 2)\"\r\n      />\r\n      {hasLogo && (\r\n        <svg\r\n          x={logoPosition}\r\n          y={logoPosition}\r\n          width={logoSize}\r\n          height={logoSize}\r\n        >\r\n          {children}\r\n        </svg>\r\n      )}\r\n    </svg>\r\n  );\r\n}\r\n\r\nexport default QrCode;\r\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:block"
+}
